@@ -4,7 +4,7 @@
 # - They can’t begin with numbers but they can have numbers after the first letter (e.g., cool_variable_5 is OK).
 
 
-# ✅ data types
+# ✅ data types: number
 # ◽ int
 # ◽ float
 an_int = 2

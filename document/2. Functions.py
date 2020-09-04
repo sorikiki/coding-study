@@ -60,8 +60,8 @@ Have fun shopping!
 '''
 def greet_customer(special_item="bananas", grocery_store): 
     # this is not valid
-  ...
-
+'''
+'''
 def greet_customer(special_item, grocery_store="Engrossing Grocers"):
     # this is valid
   ...
@@ -95,10 +95,9 @@ def create_special_string(special_item):
 # => We call the part of a program where special_item can be accessed its 'scope'.
 # => Variables defined outside the scope of a function may be accessible inside the body of the function.
 
-def current_age(current_year, birth_year) {
+def current_age(current_year, birth_year):
     age = current_year - birth_year
     return age
-}
 
 # print(current_year) => error
 # print(age) => error
