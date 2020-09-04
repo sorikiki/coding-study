@@ -3,6 +3,7 @@
 # - Variables can’t have spaces or symbols in their names other than an underscore (_).
 # - They can’t begin with numbers but they can have numbers after the first letter (e.g., cool_variable_5 is OK).
 
+
 # ✅ data types
 # ◽ int
 # ◽ float
@@ -26,6 +27,9 @@ print(25 * 2)
 # Prints "2.0"
 print(10 / 5)
 # => Notice that when we perform division, the result has a decimal place. This is because Python converts all ints to floats before performing division.
+
+# Note: Multiplying a string just makes a new string with the old one repeated! For example:
+print("na"*6) #nananananana
 
 # ◽ "**" (exponentiation)
 
