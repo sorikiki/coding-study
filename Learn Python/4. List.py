@@ -42,3 +42,54 @@ print(list(my_range)) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 my_range2 = range(2, 9, 2)
 print(list(my_range2))
 [2, 4, 6, 8]
+
+
+# ✅ Length of a List(len)
+my_list = [1, 2, 3, 4, 5]
+print(len(my_list))
+
+
+# ✅ Selecting an element by index(= this is same with javascript.)
+# it starts from 0
+# We can use the index -1 to select the last item of a list, even when we don’t know how many elements are in a list.
+
+
+# ✅ Slicing Lists(= this is same with javascript's built-in array method 'slice')
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+letters[0:3] # ['a','b','c']
+
+# - When starting at the beginning of the list, it is also valid to omit the 0:
+fruits = ['apple', 'banana', 'cherry', 'date']
+print(fruits[:3])
+
+# - We can do something similar when selecting the last few items of a list:
+print(fruits[2:]) # ['cherry' , 'date']
+
+# - If we want to select the last 3 elements of fruits, we can also use this syntax:
+print(fruits[-3:]) # ['banana', 'cherry', 'date']
+
+
+# ✅ Counting elements
+letters = ['m', 'i', 's', 's', 'i', 's', 's', 'i', 'p', 'p', 'i']
+num_i = letters.count('i')
+print(num_i) # 4
+
+
+# ✅ Sorting Lists
+# ◽ 1. sort()
+# - Notice that sort goes after our list, names
+# - sort does not return anything
+names = ['Xander', 'Buffy', 'Angel', 'Willow', 'Giles']
+names.sort()
+print(names)
+
+# ◽ 2. sorted
+# - vs sort(): It comes before a list, instead of after.
+# => Moreover, it generates a new list.
+sorted_names = sorted(names)
+print(sorted_names) # ['Angel', 'Buffy', 'Giles', 'Willow', 'Xander'] => alphabetically
+
+
+
+
+
