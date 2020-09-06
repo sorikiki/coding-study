@@ -101,4 +101,3 @@ def current_age(current_year, birth_year):
 
 # print(current_year) => error
 # print(age) => error
-
