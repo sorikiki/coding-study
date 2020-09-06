@@ -40,6 +40,7 @@ print(scoops_sold)
 
 # ✅ List Comprehensions
 # : Create a new list based on the original list.✨
+# ex. [what_will_replace_i for i in some_list_or_range]
 
 # ex1. We want to make a new list, called usernames, that has all of the strings in words with an '@' as the first character. 
 
