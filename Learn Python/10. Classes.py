@@ -17,6 +17,7 @@ print(type(cool_instance))
 # prints "<class '__main__.CoolClass'>"
 # => In Python __main__ means “this current file that we’re running”
 
+
 # ✅ Class Variables
 # : A class variable is a variable that’s the same for every instance of the class.
 # => You can define a class variable by including it in the indented part of your class definition, and you can access all of an object’s class variables with object.variable syntax.
@@ -26,6 +27,7 @@ class Musician:
 drummer = Musician()
 print(drummer.title)
 # prints "Rockstar"
+
 
 # ✅ Class Methods (none argument)
 # : Methods are functions that are defined as part of a class. 
@@ -182,3 +184,169 @@ argus = Employee("Argus Filch")
 print(argus)
 # prints "Argus Filch"
 
+
+# ✅ Inheritance
+class User:
+  is_admin = False
+  def __init__(self, username)
+    self.username = username
+
+class Admin(User):
+  is_admin = True
+# => In the above example, Admin has the same constructor as User. Only the class variable is_admin is set differently between the two.
+# => Sometimes a base class is called 'a parent class'. In these terms, the class inheriting from it, the subclass, is also referred to as 'a child class'.
+
+
+# ✅ Exceptions
+# : An Exception is a class that inherits from Python’s Exception class.
+
+# ◽ issubclass(): a Python built-in function that takes two parameters. 
+# => issubclass() returns True if the first argument is a subclass of the second argument. It returns False if the first class is not a subclass of the second. 
+# => issubclass() raises a TypeError if either argument passed in is not a class.
+issubclass(ZeroDivisionError, Exception)
+# Returns True
+
+# ◽ Why is it beneficial for exceptions to inherit from one another? 
+# =>  Let’s consider an example where we create our own exceptions.
+class KitchenException(Exception):
+  """
+  Exception that gets thrown when a kitchen appliance isn't working
+  """
+
+class MicrowaveException(KitchenException):
+  """
+  Exception for when the microwave stops working
+  """
+
+class RefrigeratorException(KitchenException):
+  """
+  Exception for when the refrigerator stops working
+  """
+
+def get_food_from_fridge():
+  if refrigerator.cooling == False:
+    raise RefrigeratorException
+  else:
+    return food
+
+def heat_food(food):
+  if microwave.working == False:
+    raise MicrowaveException
+  else:
+    microwave.cook(food)
+    return food
+
+try:
+  food = get_food_from_fridge()
+  food = heat_food(food)
+except KitchenException:
+  food = order_takeout()
+# => If either RefrigeratorException or MicrowaveException is raised, we opt to order takeout instead. 
+# => We catch both RefrigeratorException and MicrowaveException in our try/except block because both are subclasses of KitchenException.
+
+
+# ✅ Overriding Methods
+
+class User:
+  def __init__(self, username, permissions):
+    self.username = username
+    self.permissions = permissions
+
+  def has_permission_for(self, key):
+    if self.permissions.get(key):
+      return True
+    else:
+      return False
+
+class Admin(User):
+  def has_permission_for(self, key):
+    return True
+# => if you call has_permission_for on an instance of Admin, it won’t check its permissions dictionary. 
+# => Since this User is also an Admin, we just say they have permission to see everything!
+
+
+# ✅ Super()
+# : Overriding methods is really useful in some cases but sometimes we want to add some extra logic to the existing method. 
+# => In order to do that we need a way to call the method from the parent class. 
+# => Python gives us a way to do that using super().
+# => ✨ super() gives us a proxy object. With this proxy object, we can invoke the method of an object’s parent class (also called its superclass).
+class Sink:
+  def __init__(self, basin, nozzle):
+    self.basin = basin
+    self.nozzle = nozzle
+
+class KitchenSink(Sink):
+  def __init__(self, basin, nozzle, trash_compactor=None):
+    super().__init__(basin, nozzle)
+    if trash_compactor:
+      self.trash_compactor = trash_compactor
+
+
+# ✅ Interfaces
+
+class Chess:
+  def __init__(self):
+    self.board = setup_board()
+    self.pieces = add_chess_pieces()
+
+  def play(self):
+    print("Playing chess!")
+
+class Checkers:
+  def __init__(self):
+    self.board = setup_board()
+    self.pieces = add_checkers_pieces()
+
+  def play(self):
+    print("Playing checkers!")
+
+def play_game(chess_or_checkers):
+  chess_or_checkers.play()
+
+chess_game = Chess()
+checkers_game = Checkers()
+chess_game_2 = Chess()
+
+for game in [chess_game, checkers_game, chess_game_2]:
+  play_game(game)
+"""
+Prints out the following:
+Playing chess!
+Playing checkers!
+Playing chess!
+"""
+# => When two classes have the same method names and attributes, we say they implement the same interface. 
+# => An interface in Python usually refers to the names of the methods and the arguments they take. 
+# => Other programming languages have more rigid definitions of what an interface is, but it usually hinges on the fact that different objects from different classes can perform the same operation (even if it is implemented differently for each class).
+
+
+# ✅ Polymorphism
+# : Polymorphism is the term used to describe the same syntax (like the + operator here, but it could be a method name) doing different actions depending on the type of data.
+
+# For an int and an int, + returns an int
+2 + 4 == 6
+
+# For a float and a float, + returns a float
+3.1 + 2.1 == 5.2
+
+# For a string and a string, + returns a string
+"Is this " + "addition?" == "Is this addition?"
+
+# For a list and a list, + returns a list
+[1, 2] + [3, 4] == [1, 2, 3, 4]
+
+# => Polymorphism is an abstract concept that covers a lot of ground, 
+# => but defining class hierarchies that all implement the same interface is a way of introducing polymorphism to our code.
+
+a_list = [1, 18, 32, 12]
+a_dict = {'value': True}
+a_string = "Polymorphism is cool!"
+
+print(len(a_list))
+print(len(a_dict))
+print(len(a_string))
+'''
+4
+1
+21
+'''
