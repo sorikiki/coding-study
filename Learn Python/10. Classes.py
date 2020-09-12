@@ -350,3 +350,100 @@ print(len(a_string))
 1
 21
 '''
+
+
+# ✅ Dunder Methods
+
+class Color:
+  def __init__(self, red, blue, green):
+    self.red = red
+    self.blue = blue
+    self.green = green
+
+  def __repr__(self):
+    return "Color with RGB = ({red}, {blue}, {green})".format(red=self.red, blue=self.blue, green=self.green)
+
+  def add(self, other):
+    """
+    Adds two RGB colors together
+    Maximum value is 255
+    """
+    new_red = min(self.red + other.red, 255)
+    new_blue = min(self.blue + other.blue, 255)
+    new_green = min(self.green + other.green, 255)
+
+    return Color(new_red, new_blue, new_green)
+
+red = Color(255, 0, 0)
+blue = Color(0, 255, 0)
+
+magenta = red.add(blue)
+print(magenta)
+# Prints "Color with RGB = (255, 255, 0)"
+# => Unfortunately, red.add(blue) is a little verbose for something that we have an intuitive symbol for (i.e., the + symbol).
+# => 😀 Well, Python offers the dunder method __add__ for this very reason!
+
+class Color:
+  def __init__(self, red, blue, green):
+    self.red = red
+    self.blue = blue
+    self.green = green
+
+  def __repr__(self):
+    return "Color with RGB = ({red}, {blue}, {green})".format(red=self.red, blue=self.blue, green=self.green)
+
+    def __add__(self, other):
+    """
+    Adds two RGB colors together
+    Maximum value is 255
+    """
+    new_red = min(self.red + other.red, 255)
+    new_blue = min(self.blue + other.blue, 255)
+    new_green = min(self.green + other.green, 255)
+
+    return Color(new_red, new_blue, new_green)
+
+red = Color(255, 0, 0)
+blue = Color(0, 255, 0)
+
+magenta = red + blue
+
+# - Python offers a whole suite of magic methods a class can implement that will allow us to use the same syntax as 'Python’s built-in data types.'
+# => You can write functionality that allows custom defined types to behave like 'lists':
+
+class UserGroup:
+  def __init__(self, users, permissions):
+    self.user_list = users
+    self.permissions = permissions
+
+  def __iter__(self):
+    return iter(self.user_list)
+
+  def __len__(self):
+    return len(self.user_list)
+
+  def __contains__(self, user):
+    return user in self.user_list
+# => If all you need is something to act like a list you could absolutely have used a list, 
+# => but if you want to bundle some other information (like a group’s permissions, for instance) having syntax that allows for list-like operations can be very powerful.
+
+class User:
+  def __init__(self, username):
+    self.username = username
+
+diana = User('diana')
+frank = User('frank')
+jenn = User('jenn')
+
+can_edit = UserGroup([diana, frank], {'can_edit_page': True})
+can_delete = UserGroup([diana, jenn], {'can_delete_posts': True})
+
+print(len(can_edit))
+# Prints 2
+
+for user in can_edit:
+  print(user.username)
+# Prints "diana" and "frank"
+
+if frank in can_delete:
+  print("Since when do we allow Frank to delete things? Does no one remember when he accidentally deleted the site?")
