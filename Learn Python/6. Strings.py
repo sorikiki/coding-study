@@ -18,7 +18,7 @@ print(fixed_first_name)
 # ✅ Escaping Characters
 # : By adding a backslash in front of the special character we want to escape, \", we can include it in a string.
 favorite_fruit_conversation = "He said, \"blueberries are my favorite!\""
-
+# ❕ "\" is also a special character so we use this like "\\"
 
 # ✅ Is there a certain 'character or string' in the word? => use 'in' keyword!
 def contains(big_string, little_string):
