@@ -43,3 +43,35 @@ print(a*b1)
 print(a*b0)
 print(a*b2+a*b1*10+a*b0*100)
 
+
+# ✅ Day 2 
+# ◽ sys.stdin.readline().split()
+
+# ◽ list()
+
+# ◽ EOFError()
+while True:
+    try:
+        a, b = map(int, input().split())
+        print(a+b)
+    except EOFError:
+        break
+
+
+# ◽ str()
+
+# 1110
+num = input()
+origin = num
+i = 0
+while True:
+	if len(num) == 1:
+		num = '0' + num
+	first = int(num[1])
+	sum = int(num[0]) + first
+	second = str(sum)[-1]
+	num = str(first) + second
+	i += 1
+	if origin == num:
+		break
+print(i)
