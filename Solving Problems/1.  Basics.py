@@ -75,3 +75,55 @@ while True:
 	if origin == num:
 		break
 print(i)
+
+
+# ✅ Day3
+'''
+# To see the nested lists, you can convert the zip object to a list first:
+print(list(names_and_heights)) # [('Jenny', 61), ('Alexus', 70), ('Sam', 67), ('Grace', 65)]
+'''
+
+# ◽ zip: 유효성
+
+# 2562
+# 1. zip을 이용한 방법
+nums = []
+for i in range(9):
+    num = int(input())
+    nums.append(num)
+index = list(range(1,10))
+pairs = zip(nums, index)
+new = list(pairs)
+nums.sort()
+max = nums[-1]
+print(max)
+for i, j in new:
+    if i == max:
+        print(j)
+
+# 2. sorted함수를 이용한 방법
+nums = []
+for i in range(9):
+    num = int(input())
+    nums.append(num)
+new = sorted(nums)
+max = new[-1]
+print(max)
+idx = nums.index(max) + 1
+print(idx)
+
+# ◽ 반복해서 수를 입력받고 싶을 때
+A,B,C = [int(input()) for _ in range(3)]
+
+# ◽ sum()
+
+# ◽ 출력형식 지정하는 방법 
+
+#4344
+num = int(input())
+for i in range(num):
+    scores = list(map(int, input().split()))
+    average = (sum(scores) - scores[0])/scores[0]
+    filtered = [i for i in scores[1:] if i>average]
+    over_percent = len(filtered)/scores[0]*100
+    print(str(format(over_percent,".3f")) + '%')
