@@ -119,7 +119,8 @@ A,B,C = [int(input()) for _ in range(3)]
 
 # ◽ 출력형식 지정하는 방법 
 
-#4344
+# ✅ Day 4
+# 4344
 num = int(input())
 for i in range(num):
     scores = list(map(int, input().split()))
@@ -127,3 +128,17 @@ for i in range(num):
     filtered = [i for i in scores[1:] if i>average]
     over_percent = len(filtered)/scores[0]*100
     print(str(format(over_percent,".3f")) + '%')
+
+# 4673: 왜 컴파일 에러야..
+def d(n):
+    li = list(map(int, str(n)))
+    return sum(li)
+
+for i in range(1,10001):
+    for j in range(1,i+1):
+	    if i == j+d(j):
+            break
+	    elif j == i:
+		    print(i)
+	    else:
+		    continue
