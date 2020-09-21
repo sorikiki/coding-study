@@ -119,6 +119,7 @@ A,B,C = [int(input()) for _ in range(3)]
 
 # ◽ 출력형식 지정하는 방법 
 
+
 # ✅ Day 4
 # 4344
 num = int(input())
@@ -129,16 +130,77 @@ for i in range(num):
     over_percent = len(filtered)/scores[0]*100
     print(str(format(over_percent,".3f")) + '%')
 
-# 4673: 왜 컴파일 에러야..
-def d(n):
-    li = list(map(int, str(n)))
-    return sum(li)
+# 4673
+# ❗ indentation 혼용 no(space+tab)
 
-for i in range(1,10001):
-    for j in range(1,i+1):
-	    if i == j+d(j):
-            break
-	    elif j == i:
-		    print(i)
-	    else:
-		    continue
+# ◽ set()
+#  https://wikidocs.net/16044
+
+# ✔ what is 'set'?
+# - mutable object
+# - cannot contain mutable elements(list, dictionary, set)
+# - unordered (= we cannot access to it by indexing.)
+
+# ✔ how to create?
+# - The set uses the same brackets as the disk type, so it cannot be created with brackets alone.
+'''
+>>> s = {}
+>>> type(s)
+<class 'dict'>
+>>> s = set()
+>>> type(s)
+<class 'set'>
+>>> s
+set()
+'''
+# - When you insert an iterable object in the set constructor, it converts and creates a set.
+# - Of course, you can put the value in brackets without the set constructor
+'''
+>>> s = set([1,3,5,7])
+>>> s
+{1, 3, 5, 7}
+>>> p = {1, 3, 5, 7}
+>>> p
+{1, 3, 5, 7}
+'''
+
+# ✔ Remove duplicate elements
+'''
+>>> s = {1, 5, 1, 1, 1, 3, 7}
+>>> s
+{1, 3, 5, 7}
+'''
+
+# ✔ in (same with other collection types)
+'''
+>>> 2 in r
+True
+>>> 3 in r
+False
+>>> 3 not in r
+True
+'''
+
+# ✔ add & update (remove, discard is also available.)
+k = {1, 2, 3}
+k.add(4) # only add one element
+k.update([4,5,6]) # add several elements => {1, 2, 3, 4, 5, 6}
+
+a = {1, 2, 3}
+a.update([1, 2, 4]) # { 1, 2, 3, 4}
+
+# ✔ copy
+
+# ✔ operators: |(합집합), -(차집합), ^(대칭차집합)
+
+# ✨ Let's use the feature of the set to eliminate redundant elements.
+setA = {i for i in range(1, 10001)}
+setB = set()
+for i in range(1, 10001):
+    for j in str(i):
+        i += int(j)
+    setB.add(i)
+
+setA = sorted(setA-setB)
+for i in setA:
+    print(i)
