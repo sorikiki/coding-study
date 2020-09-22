@@ -204,3 +204,22 @@ for i in range(1, 10001):
 setA = sorted(setA-setB)
 for i in setA:
     print(i)
+
+
+# ✅ Day 5
+# ◽ CHARACTER => ASCII 
+# - 문자 -> 아스키코드 : ord("문자")
+# - 아스키코드 -> 문자 : chr("아스키코드")
+
+# ◽ max()
+
+# 1157
+s = list(input().upper())
+cnt = []
+for i in range(ord('A'),ord('Z')+1):
+    cnt.append(s.count(chr(i)))
+max_cnt = max(cnt)
+if cnt.count(max_cnt) > 1 :
+    print("?")
+else:
+    print(chr(ord('A') + cnt.index(max_cnt)))
