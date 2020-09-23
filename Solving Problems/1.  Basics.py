@@ -223,3 +223,46 @@ if cnt.count(max_cnt) > 1 :
     print("?")
 else:
     print(chr(ord('A') + cnt.index(max_cnt)))
+
+
+# ✅ Day6
+# ◽ reverse(), reversed()
+# 1. reverse() return none, but reversed() return reversed list.
+# => Their relationship is similar to sort() and sorted()
+# 2. reverse() is a method only to list, but reversed() is a method to list and string.
+s = 'abcde'
+s_list = list(s)  # reverse 함수를 사용하기 위해 문자열을 list로 치환
+s_list.reverse()  # reverse 함수를 사용해 문자열 리스트를 거꾸로 뒤집음
+
+print(''.join(s_list))  # 거꾸로 뒤집어진 리스트를 연결해서 출력
+
+s = 'abcde'
+print(''.join(reversed(s)))  # 'edcba'
+
+# ◽ Easiest way to reverse string
+s = 'abcde'
+print(s[::-1])  # 'edcba'
+
+s = 'abcde'
+print(s[3:0:-1])  # dcb
+
+# 2908
+li = list(input().split())
+for i in [-1,-2,-3]:
+    if li[0][i] == li[1][i]:
+        continue
+    elif li[0][i] > li[1][i]:
+        print(li[0][::-1])
+        break
+    else:
+        print(li[1][::-1])
+        break
+
+# ◽ use 'in' operator to check some string into full string.
+# 2941
+chr = input()
+cnt = len(chr)
+cr = ['c=','c-','dz=','d-','lj','nj','s=','z=']
+for i in cr:
+    cnt -= chr.count(i)
+print(cnt)
