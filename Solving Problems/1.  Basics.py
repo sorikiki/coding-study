@@ -266,3 +266,81 @@ cr = ['c=','c-','dz=','d-','lj','nj','s=','z=']
 for i in cr:
     cnt -= chr.count(i)
 print(cnt)
+
+
+# ✅ Day7
+# ◽ UnbouncedLocalError => use keyword 'global' ✨
+x = 10
+def foo():
+    print(x)
+    # x += 1 => error
+# : This is because when you make an assignment to a variable in a scope, that variable becomes local to that scope and shadows any similarly named variable in the outer scope.
+# => Since the last statement in foo assigns a new value to x, the compiler recognizes it as a local variable. Consequently when the earlier print(x) attempts to print the uninitialized local variable and an error results.
+# => In the example above you can access the outer scope variable by declaring it global 😊:
+x = 10
+def foobar():
+    global x
+    print(x)
+    x += 1
+# => This explicit declaration is required in order to remind you that you are actually modifying the value of the variable in the outer scope.
+
+# + You can do a similar thing in a nested scope using the nonlocal keyword:
+def foos():
+    x = 10
+    def bar():
+        nonlocal x
+        print(x)
+        x += 1
+    bar()
+    print(x)
+foos()
+# ◽ global : This keyword is useful when we need to assign any value to global object inside any function.
+# ◽ nonlocal : This keyword is useful when we need to assign any value to nested scope variable.
+
+# 1712
+# 😡 fail code => exceed time! 
+A, B, C = map(int, input().split())
+n = 1
+def printn(x, y, z):
+    global n
+    if z-y <= 0:
+        print(-1)
+    else:
+        while x/(z-y)>=n:
+            n += 1
+        print(n)
+printn(A, B, C)
+
+# 😀 success code
+import math
+A, B, C = map(int, input().split())
+def print_n(x, y, z):
+    if z-y <= 0:
+        print(-1)
+    else:
+        h = x/(z-y)
+        if h % 1 == 0:
+            print (int(h+1))
+        else:
+            print(int(math.ceil(h)))
+print_n(A, B, C)
+
+# 2839
+n = int(input())
+p5 = n//5
+k = n%5
+p3 = 0
+def pp(n):
+    global p5, k, p3
+    while p5>=0:
+        if k % 3 == 0:
+            p3 = k//3
+            print (p3+p5)
+            break
+        else:
+            if p5 == 0:
+                print(-1)
+                break
+            p5 -= 1
+            k = n-5*p5
+pp(n)
