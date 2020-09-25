@@ -344,3 +344,7 @@ def pp(n):
             p5 -= 1
             k = n-5*p5
 pp(n)
+
+
+# ✅ Day8
+# 2292, 1193 unsolved
