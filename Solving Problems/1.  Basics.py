@@ -348,3 +348,25 @@ pp(n)
 
 # ✅ Day8
 # 2292, 1193 unsolved
+
+# 1193
+n = int(input())
+i = 1
+finish = False
+while True:
+    k = 0
+    while k<i:
+        k += 1
+        if int(i*(i-1)/2+k) == n:
+            finish = True
+            break
+    if finish == True:
+        if i%2 == 0:
+            a = k
+            b = i-k+1
+        else:
+            a = i-k+1
+            b = k
+        print(str(a)+'/'+str(b))
+        break
+    i += 1
