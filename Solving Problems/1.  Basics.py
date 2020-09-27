@@ -350,6 +350,7 @@ pp(n)
 # 2292, 1193 unsolved
 
 # 1193
+# 😡 fail code => 시간 초과 에러(행과 열을 모두 rotate한다.)
 n = int(input())
 i = 1
 finish = False
@@ -370,3 +371,16 @@ while True:
         print(str(a)+'/'+str(b))
         break
     i += 1
+
+# 😊 success code (행만 rotate한다.)
+X = int(input())
+stage, key_X = 1, 1
+while stage + key_X <= X:
+    key_X += stage
+    stage += 1
+step = X-key_X
+x, y = stage-step, step+1
+if stage%2 == 0:
+    print('{}/{}'.format(y,x))
+else:
+    print('{}/{}'.format(x,y))
