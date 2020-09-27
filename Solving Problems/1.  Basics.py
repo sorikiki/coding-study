@@ -395,3 +395,8 @@ else:
         i += 6
         sum += 1
     print(sum)
+
+# 2869
+import math
+A, B, V= map(int,input().split())
+print(math.ceil((V-A)/(A-B)+1))
