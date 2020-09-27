@@ -346,8 +346,7 @@ def pp(n):
 pp(n)
 
 
-# ✅ Day8
-# 2292, 1193 unsolved
+# ✅ let's solve math problems 
 
 # 1193
 # 😡 fail code => 시간 초과 에러(행과 열을 모두 rotate한다.)
@@ -384,3 +383,15 @@ if stage%2 == 0:
     print('{}/{}'.format(y,x))
 else:
     print('{}/{}'.format(x,y))
+
+# 2292
+X = int(input())
+if X == 1:
+    print(1)
+else:
+    sum, key_X, i = 2, 2, 6
+    while key_X + i <= X:
+        key_X += i
+        i += 6
+        sum += 1
+    print(sum)
