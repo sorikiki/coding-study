@@ -400,3 +400,26 @@ else:
 import math
 A, B, V= map(int,input().split())
 print(math.ceil((V-A)/(A-B)+1))
+
+# 10250
+T = int(input())
+for i in range(T):
+    H, W, N = map(int, input().split())
+    n = 0
+    finish = False
+    while True:
+    	if finish == True:
+    		print(int(str(j)+format(i,"02")))
+    		break
+    	i = 0
+    	for _ in range(W):
+    		if finish == True:
+    			break
+    		i += 1
+    		j = 0
+    		for _ in range(H):
+    			j += 1
+    			n += 1
+    			if n == N:
+    				finish = True
+    				break
