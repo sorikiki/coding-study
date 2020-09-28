@@ -423,3 +423,15 @@ for i in range(T):
     			if n == N:
     				finish = True
     				break
+
+# 2775
+T = int(input())
+for _ in range(T):
+    li = list(range(1, 15))
+    k, n = [int(input()) for _ in range(2)]
+    for _ in range(k):
+        i = 1
+        for _ in range(n-1):
+            li[i] = li[i-1] + li[i]
+            i += 1
+    print(li[n-1])
