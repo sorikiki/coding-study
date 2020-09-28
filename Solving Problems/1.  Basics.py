@@ -435,3 +435,19 @@ for _ in range(T):
             li[i] = li[i-1] + li[i]
             i += 1
     print(li[n-1])
+
+# 1011
+import math
+T = int(input())
+for _ in range(T):
+    a, b = map(int, input().split())
+    n = b-a
+    rootn = n**(1/2)
+    if rootn % 1 == 0:
+        print(2*int(rootn)-1)
+    else:
+        k = math.floor(rootn)
+        if n-k**2 < (k+1)**2-n:
+            print(2*k)
+        else:
+            print(2*k+1)
