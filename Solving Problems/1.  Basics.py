@@ -451,3 +451,17 @@ for _ in range(T):
             print(2*k)
         else:
             print(2*k+1)
+
+# 1978
+n = int(input())
+li = list(map(int, input().split()))
+sosu = []
+for i in li:
+    k, sum = 0, 0
+    for j in range(i):
+        k += 1
+        if i % k == 0:
+            sum += 1
+    if sum == 2:
+        sosu.append(i)
+print(len(sosu))
