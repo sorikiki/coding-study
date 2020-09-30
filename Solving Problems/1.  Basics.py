@@ -465,3 +465,36 @@ for i in li:
     if sum == 2:
         sosu.append(i)
 print(len(sosu))
+
+
+# 2581 review 필요
+M,N = [int(input()) for i in range(2)]
+s = set()
+if M == 1 or M == 2:
+	s = set(range(3, N+1, 2))
+	if N>=2:
+		s.add(2)
+else:
+	if M % 2 == 0:
+		M += 1
+	s = set(range(M, N+1, 2))
+p = 3
+while p**2 <= N:
+	k = set()
+	for i in s:
+		if i % p == 0:
+			k.add(i)
+	s = s-k
+	if p in list(range(M, N+1)):
+		li = []
+		for _ in list(range(1, p+1)):
+			if p % _ == 0:
+				li.append(_)
+		if len(li) == 2:
+			s = s | {p}
+	p += 1
+if len(s) == 0:
+	print(-1)
+else:
+	print(sum(s))
+	print(min(s))
