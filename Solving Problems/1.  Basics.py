@@ -498,3 +498,52 @@ if len(s) == 0:
 else:
 	print(sum(s))
 	print(min(s))
+
+
+# 1929 시간초과 에러
+M, N = map(int, input().split())
+s = set()
+if M == 1 or M == 2:
+	s = set(range(3, N+1, 2))
+	if N>=2:
+		s.add(2)
+else:
+	if M % 2 == 0:
+		M += 1
+	s = set(range(M, N+1, 2))
+p= 3
+while p**2 <= N:
+	k = set()
+	for i in s:
+		if i % p == 0:
+			k.add(i)
+	s = s-k
+	if p in list(range(M, N+1)):
+		li = []
+		for _ in list(range(1, p+1)):
+			if p % _ == 0:
+				li.append(_)
+		if len(li) == 2:
+			s = s | {p}
+	p += 1
+for _ in sorted(s):
+	print(_)
+
+# 1929 
+M, N  = map(int, input().split())
+
+num_range = [True] * (N+1)
+num_range[0] = False
+num_range[1] = False
+
+i = 2
+while i**2<=N:
+    if num_range[i] == True:
+        j = i*i
+        while j<=N:
+            num_range[j] = False
+            j += i
+    i += 1
+for k in range(M, N+1):
+    if num_range[k]:
+        print(k)
