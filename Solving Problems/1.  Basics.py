@@ -547,3 +547,22 @@ while i**2<=N:
 for k in range(M, N+1):
     if num_range[k]:
         print(k)
+
+# 4948
+while True:
+	n = int(input())
+	if n == 0:
+		break
+	range = [True] * (2*n + 1)
+	range[0] = False
+	range[1] = False
+	p = 2
+	while p ** 2 <= 2*n:
+		if range[p] == True:
+			j = p * p
+			while j <= 2*n:
+				range[j] = False
+				j += p
+		p += 1
+	li = sum(range[n+1:2*n+1])
+	print(li)
