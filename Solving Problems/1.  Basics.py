@@ -566,3 +566,25 @@ while True:
 		p += 1
 	li = sum(range[n+1:2*n+1])
 	print(li)
+
+# 9020
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    range = [True] * (n+1)
+    range[0] = False
+    range[1] = False
+    p = 2
+    while p**2 <= n:
+        if range[p] == True:
+            j = p*p
+            while j<=n:
+                range[j] = False
+                j += p
+        p += 1
+    k = n//2
+    while k>=2:
+        if range[k] == True and range[n-k] == True:
+            print(k, n-k)
+            break
+        k -= 1
