@@ -592,3 +592,20 @@ for _ in range(t):
 # 1085
 x, y, w, h= map(int, input().split())
 print(min(x, y, h-y, w-x))
+
+# 3009
+x_li = []
+y_li = []
+for _ in range(3):
+    x, y = map(int, input().split())
+    x_li.append(x)
+    y_li.append(y)
+for i in x_li:
+    if x_li.count(i) == 1:
+        x = i
+        break
+for j in y_li:
+    if y_li.count(j) == 1:
+        y = j
+        break
+print(i, j)
