@@ -609,3 +609,17 @@ for j in y_li:
         y = j
         break
 print(i, j)
+
+# 4153
+while True:
+    li = list(map(int, list(input().split())))
+    if li[0] == 0 and li[1] == 0 and li[2] == 0:
+        break
+    if li.count(max(li)) != 1:
+        print('wrong')
+    else:
+        li.sort()
+        if li[2]**2 == li[0]**2 + li[1]**2:
+            print('right')
+        else:
+            print('wrong')
