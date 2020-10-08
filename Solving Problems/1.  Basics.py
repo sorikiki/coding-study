@@ -629,3 +629,11 @@ import math
 r = int(input())
 print(r**2*math.pi)
 print(2*(r**2))
+
+# 10872
+n = int(input())
+i, t = 1, 1
+while i<=n:
+    t = t*i
+    i += 1
+print(t)
