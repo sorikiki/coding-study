@@ -637,3 +637,18 @@ while i<=n:
     t = t*i
     i += 1
 print(t)
+
+# 10870
+n = int(input())
+li = [0, 1]
+if n ==0 or n == 1:
+    print(n)
+else:
+    k =2
+    while True:
+        next = li[k-2] + li[k-1]
+        li.append(next)
+        if k == n:
+            break
+        k += 1
+    print(li[-1])
