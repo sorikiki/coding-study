@@ -652,3 +652,31 @@ else:
             break
         k += 1
     print(li[-1])
+
+
+# 1002 
+t = int(input())
+for _ in range(t):
+    x1, y1, r1, x2, y2, r2 = map(int, input().split())
+    a = r1 + r2
+    if r1 > r2:
+        b = r1 - r2
+    else:
+        b = r2 - r1
+    d = ((x1-x2)**2+(y1-y2)**2)**(1/2)
+    if d == 0:
+        if r1 == r2:
+            print(-1)
+        else:
+            print(0)
+    else:
+        if d>a:
+            print(0)
+        elif d == a:
+            print(1)
+        elif d<a and d>b:
+            print(2)
+        elif d == b:
+            print(1)
+        else:
+            print(0)
