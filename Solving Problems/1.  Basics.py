@@ -680,3 +680,12 @@ for _ in range(t):
             print(1)
         else:
             print(0)
+
+# 2750
+t = int(input())
+li = []
+for _ in range(t):
+    n = int(input())
+    li.append(n)
+for i in sorted(li):
+    print(i)
