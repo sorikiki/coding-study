@@ -146,13 +146,10 @@ print(singleton) # ('hello',)
 
 # 2751 미해결
 import sys
-def a():
-	n = int(input())
-	li = []
-	for _ in range(n):
-	    t = sys.stdin.readline().rstrip()
-	    li.append(t)
-	    print(li)
-	    print(sorted(li))
-	for _ in reversed(sorted(li)):
-	    print(_)
+n = int(input())
+li = []
+for _ in range(n):
+    t = int(sys.stdin.readline().rstrip())
+    li.append(t)
+for _ in sorted(li):
+    print(_)
