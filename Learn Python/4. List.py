@@ -144,7 +144,7 @@ print(singleton) # ('hello',)
 1
 '''
 
-# 2751 미해결
+# 2751 해결
 import sys
 n = int(input())
 li = []
@@ -153,3 +153,9 @@ for _ in range(n):
     li.append(t)
 for _ in sorted(li):
     print(_)
+
+# 1427 해결
+n = input()
+li = list(map(int,list(n)))
+for i in reversed(sorted(li)):
+    print(i, end='')
