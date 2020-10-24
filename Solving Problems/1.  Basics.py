@@ -701,3 +701,13 @@ while True:
         print('factor')
     else:
         print('neither')
+
+# 3036번
+import fractions
+n = int(input())
+li = list(map(int, input().split()))
+k = 1
+for i in range(n-1):
+    a = fractions.Fraction(li[k], li[0])
+    print(str(a.denominator) + '/' + str(a.numerator))
+    k += 1
