@@ -711,3 +711,5 @@ for i in range(n-1):
     a = fractions.Fraction(li[k], li[0])
     print(str(a.denominator) + '/' + str(a.numerator))
     k += 1
+
+# coding test
