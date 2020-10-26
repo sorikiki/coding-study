@@ -712,4 +712,16 @@ for i in range(n-1):
     print(str(a.denominator) + '/' + str(a.numerator))
     k += 1
 
-# coding test
+# 1676번 해결
+n = int(input())
+i = 1
+result = 1
+while i <= n:
+    result *= i
+    i += 1
+k = 0
+idx = -1
+while str(result)[idx] == '0':
+    k += 1
+    idx -= 1
+print(k)
