@@ -725,3 +725,29 @@ while str(result)[idx] == '0':
     k += 1
     idx -= 1
 print(k)
+
+# 2609
+a, b = map(int, input().split())
+j = 1
+while j <= min(a, b):
+    if a%j == 0 and b%j == 0 and min(a,b) != 1:
+        s = False
+        break
+    s = True
+    j += 1
+if s:
+    minab = 1
+else:
+    i = 2
+    minab = 1
+    while i <= min(a, b):
+        if a%i ==0 and b%i ==0:
+            minab *= i
+            a = a//i
+            b = b//i
+            i = 2
+            continue
+        i += 1
+maxab = minab * a * b
+print(minab)
+print(maxab)
