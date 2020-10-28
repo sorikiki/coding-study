@@ -159,3 +159,17 @@ n = input()
 li = list(map(int,list(n)))
 for i in reversed(sorted(li)):
     print(i, end='')
+
+
+# 11651번 실패
+def f():
+	t = int(input())
+	ali = []
+	bli = []
+	for i in range(t):
+		a, b = sys.stdin.readline().split()
+		ali.append(a)
+		bli.append(b)
+		z = sorted(zip(bli, ali))
+	for i in z:
+		print(i[1], i[0])
