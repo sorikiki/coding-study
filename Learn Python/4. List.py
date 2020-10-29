@@ -173,3 +173,13 @@ def f():
 		z = sorted(zip(bli, ali))
 	for i in z:
 		print(i[1], i[0])
+
+# 11050번
+N, K = map(int, input().split())
+result = 1
+for i in range(K):
+    result *= N
+    N -= 1
+for j in range(1, K+1):
+    result //= j
+print(result)
