@@ -183,3 +183,13 @@ for i in range(K):
 for j in range(1, K+1):
     result //= j
 print(result)
+
+# 11051번
+N, K = map(int, input().split())
+result = 1
+for i in range(K):
+    result *= N
+    N -= 1
+for j in range(1, K+1):
+    result //= j
+print(result%10007)
