@@ -751,3 +751,22 @@ else:
 maxab = minab * a * b
 print(minab)
 print(maxab)
+
+# 11653
+n = int(input())
+while n!= 1:
+    sosu = False
+    for i in range(2, n+1):
+        sosu = True
+        if n % i != 0:
+            sosu = False
+            continue
+        for j in range(2, i):
+            if i % j == 0:
+                sosu = False
+                continue
+        if sosu:
+            break
+    if sosu:
+        n //= i
+        print(i)
