@@ -770,3 +770,29 @@ while n!= 1:
     if sosu:
         n //= i
         print(i)
+
+# 2004 실패
+a, b = map(int, input().split())
+two = 0
+five = 0
+for i in range(b):
+    A = a
+    B = b
+    while True:
+        if A % 2 == 0:
+            A //= 2
+            two += 1
+        elif A % 5 == 0:
+            A //= 5
+            five += 1
+        elif B % 2 == 0:
+            B //= 2
+            two -= 1
+        elif B % 5 == 0:
+            B //= 5
+            five -= 1
+        else:
+            a -= 1
+            b -= 1
+            break
+print(two, five)
