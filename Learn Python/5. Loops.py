@@ -69,3 +69,19 @@ messages = [user + " please follow me!" for user in usernames2]
 4. Appends that concatenation to the new list called messages
 5. Repeats steps 1-4 for all of the strings in usernames
 '''
+
+# ex3. 
+tuples = [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
+# [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+'''
+1. 가변수가 x인 루프가 상위루프, 따라서 x=1
+2. y=3, y=1, y=4 ...
+3. x,y에 대입하고
+4. x와 y가 같지 않으면 리스트에 appends한다.
+'''
+
+# ex4.
+# li2 = [[0 for col in range(M)] for row in range(N)]
+'''
+1. 이번에는 가변수가 row인 루프가 상위루프
+'''
