@@ -42,7 +42,7 @@ print(common_letters('apple', 'elephant'))
 # - .title() returns the string in title case, which means the first letter of each word is capitalized.
 # => ❗ Note that string methods can only create new strings, they do not change the original string.
 
-# ◽ Splitting
+# ◽ Splitting (string -> list)
 # - .split() is performed on a string, takes one argument, and returns a list of substrings found between the given argument (which in the case of .split() is known as the delimiter). 
 # => If you do not provide an argument for .split() it will default to splitting at spaces.
 greatest_guitarist = "santana"

@@ -140,3 +140,63 @@ while True:
 
     
 print(count)
+
+# ✅ 럭키 스트레이트
+n = input()
+l = len(n)//2
+s1 = 0
+s2 = 0
+for i in range(0, l):
+  s1 += int(n[i])
+  s2 += int(n[i+l])
+if s1 == s2:
+  print('LUCKY')
+else:
+  print('READY')
+
+# ✅ 문자열 재정렬(.join()함수와 .isalpha() 함수 활용 ❗❗❗)
+data = input()
+alpha = []
+nsum = 0
+
+for i in data:
+  if i.isalpha():
+    alpha.append(i)
+  else:
+    nsum += int(i)
+
+alpha.sort()
+
+if nsum != 0: # 어차피 숫자는 0이상이라서
+  alpha.append(str(nsum))
+
+print(''.join(alpha))
+
+# ✅ 문자열 압축
+data = input()
+length = len(data)
+
+# 각각의 단위수
+for i in range(1, length+1):
+  block1 = data[0:i]
+  j = 1 # 블록을 만든 횟수
+  l = length-i
+  cnt = 1
+  result1 = []
+  while l >= i:
+    block2 = data[j*i:j*i + i]
+    if block1 == block2:
+      cnt += 1
+    else:
+      result1.append(str(cnt) + block1)
+      cnt = 1
+    block1 = block2
+    j += 1
+    l -= i
+  if cnt != 1:
+    result1.append(str(cnt) + block1)
+  else:
+    residuals = data[-(l+i):]
+    print(residuals)
+  print(result1)
+
