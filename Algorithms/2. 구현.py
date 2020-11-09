@@ -175,28 +175,60 @@ print(''.join(alpha))
 # ✅ 문자열 압축
 data = input()
 length = len(data)
+result = []
 
 # 각각의 단위수
 for i in range(1, length+1):
   block1 = data[0:i]
-  j = 1 # 블록을 만든 횟수
-  l = length-i
+  j = 1 # 블록1을 만든 횟수
+  l = length - i # 블록1을 만들고 남은 길이
   cnt = 1
   result1 = []
-  while l >= i:
-    block2 = data[j*i:j*i + i]
+  result2 = []
+  while l>0:
+    if l<i:
+      block2 = data[-1:]
+      result2.append(str(1) + data[-l:])
+      break
+    else:
+      block2 = data[j*i:j*i + i]
     if block1 == block2:
       cnt += 1
     else:
       result1.append(str(cnt) + block1)
       cnt = 1
     block1 = block2
-    j += 1
     l -= i
-  if cnt != 1:
-    result1.append(str(cnt) + block1)
-  else:
-    residuals = data[-(l+i):]
-    print(residuals)
-  print(result1)
+    j += 1
+  result1.append(str(cnt) + block1)
+  t = 0
+  for i in result1+result2:
+    t += len(i) - i.count('1')
+  result.append(t)
+print(min(result))
 
+# ✅ 문자열 압축 (답안)
+def solution(s):
+  answer = len(s)
+  # 1개 단위(step)부터 압축 단위를 늘려가며 확인
+  for step in range(1, len(s) // 2  + 1):
+    compressed = ""
+    prev = s[0:step]
+    count = 1
+    # 단위(step) 크기만큼 증가시키며 이전 문자열과 비교
+    for j in range(step, len(s), step):
+      if prev == s[j:j+step]:
+        count +=1 
+    # 다른 문자열이 나왔다면(더 이상 압축 x)
+      else:
+        compressed += str(count) + prev if count >=2 else prev
+        prev = s[j: j + step]
+        count = 1
+    # 남아 있는 문자열에 대해서 처리
+    compressed += str(count) + prev if count >= 2 else prev
+    answer = min(answer, len(compressed))
+  return answer
+  # ❗ 내 코드와 다른 점
+  # range()함수에서 세번째 인자를 준것
+  # if else 구문의 활용
+  # answer의 최소값을 계속해서 갱신해서 return 한 것
