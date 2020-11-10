@@ -232,3 +232,46 @@ def solution(s):
   # range()함수에서 세번째 인자를 준것
   # if else 구문의 활용
   # answer의 최소값을 계속해서 갱신해서 return 한 것
+
+# ✅ 좌물쇠와 열쇠
+def solution2(key, lock):
+  answer = True
+  row = []
+  col = []
+  lock_length = len(lock)
+  key_length = len(key)
+  cnt_row = 0
+  for i in lock:
+    cnt_col = 0
+    if sum(i) != lock_length:
+      row.append(cnt_row)
+      for j in i:
+        if j == 0:
+          col.append(cnt_col)
+        cnt_col += 1
+    cnt_row += 1
+  trans_lock = [[lock[i][j] for j in range(min(col),max(col)+1)] for i in range(min(row), max(row)+1)]
+
+  print(trans_lock)
+
+  for _ in range(4):
+    trans_key = []
+    # key를 90도 회전한 2차원 배열: trans_key
+    for i in range(0, key_length):
+      trans_col = []
+      for j in range(key_length-1, -1, -1):
+        trans_col.append(key[j][i])
+      trans_key.append(trans_col)
+    print(trans_key)
+    # trans_key의 일부와 trans_lock이 상반?
+    for i in range(0, len(trans_key[0])-len(trans_lock[0]) + 1):
+      for j in range(0, len(trans_key) - len(trans_lock) + 1):
+        li = [[trans_key[a][b] for b in range(i, i+len(trans_lock[0]))] for a in range(j, j+len(trans_lock))]
+        sum_li = [li[i][j] + trans_lock[i][j] for i in range(0, len(li)) for j in range(0, len(li[0]))]
+        print(sum_li)
+        if sum_li.count(1) == len(li) * len(li[0]):
+          answer= True
+          return answer
+        else:
+          answer= False
+  return answer
