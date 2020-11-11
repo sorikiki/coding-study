@@ -288,16 +288,20 @@ def solution3(n, build_frame):
         answer.append(install_h(i, answer))
     # 삭제
     else:
+      # 기둥을 삭제하는 경우
       if i[2] == 0:
-        return
+        if answer.count(remove_v(i,answer)):
+          answer.remove(remove_v(i, answer))
+      # 보를 삭제하는 경우
       else:
-        return
+        if answer.count(remove_h(i,answer)):
+          answer.remove(remove_h(i, answer))
     answer = trim_result(answer)
   return answer
 
 # 배열을 정리하는 함수
 def trim_result(result):
-  result = [i[0:3] for i in result]
+  result = [i[0:3] for i in result if i]
   result.sort()
   return result
 
@@ -306,7 +310,7 @@ def install_v(block, answer):
   # case1. 기둥이 바닥 위에
   if block[1] == 0:
     return block
-  # case2. 기둥이 보나 다른 기둥 위에
+  # case2. 기둥이 한 쪽 보끝이나 다른 기둥 위에
   else:
     for i in answer:
       if i[0] == block[0]-1 and i[1] == block[1] and i[2] == 1:
@@ -315,8 +319,7 @@ def install_v(block, answer):
         return block
       if i[0] == block[0] and i[1] == block[1]-1 and i[2] == 0:
         return block
-  return
-        
+  return    
       
 # 보를 설치하는 함수
 def install_h(block, answer):
@@ -335,3 +338,27 @@ def install_h(block, answer):
           return block
     k += 1
   return
+  
+# 기둥을 삭제하는 함수
+def remove_v(block, answer):
+  # case1. 아래쪽에 받치는 기둥이 있는 경우
+  for i in answer:
+    if i[0] == block[0] and i[1] == block[1]-1 and i[2] == 0:
+      return
+  # case2. 교차점에 있는 보의 반대편이 보와 연결되고 있는 경우
+  x2 = [-2, 1, -2, 1]
+  x1 = [-1, 0, -1, 0]
+  y = [1, 1, 0, 0]
+  for j in range(0,4):
+    if answer.count([block[0]+x1[j], block[1]+y[j], block[2]+1]) and answer.count([block[0]+x2[j], block[1]+y[j], block[2]+1]):
+      return
+  return block[0:3]
+
+# 보를 삭제하는 함수
+def remove_h(block, answer):
+  x2 = [-2, 2]
+  x1 = [-1, 1]
+  for j in range(0,2):
+    if answer.count([block[0]+x1[j], block[1], block[2]]) and answer.count([block[0]+x2[j], block[1], block[2]]):
+      return
+  return block[0:3]
