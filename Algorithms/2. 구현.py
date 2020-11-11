@@ -275,3 +275,63 @@ def solution2(key, lock):
         else:
           answer= False
   return answer
+
+  # ✅ 기둥과 보 설치
+def solution3(n, build_frame):
+  answer =[]
+  for i in build_frame:
+    # 설치
+    if i[3]:
+      if i[2] == 0:
+        answer.append(install_v(i, answer))
+      else:
+        answer.append(install_h(i, answer))
+    # 삭제
+    else:
+      if i[2] == 0:
+        return
+      else:
+        return
+    answer = trim_result(answer)
+  return answer
+
+# 배열을 정리하는 함수
+def trim_result(result):
+  result = [i[0:3] for i in result]
+  result.sort()
+  return result
+
+# 기둥을 설치하는 함수
+def install_v(block, answer):
+  # case1. 기둥이 바닥 위에
+  if block[1] == 0:
+    return block
+  # case2. 기둥이 보나 다른 기둥 위에
+  else:
+    for i in answer:
+      if i[0] == block[0]-1 and i[1] == block[1] and i[2] == 1:
+        return block
+      if i[0] == block[0] and i[1] == block[1] and i[2] == 1:
+        return block
+      if i[0] == block[0] and i[1] == block[1]-1 and i[2] == 0:
+        return block
+  return
+        
+      
+# 보를 설치하는 함수
+def install_h(block, answer):
+  # case1. 양 끝점 중 하나라도 기둥이 있을 때
+  for i in answer:
+    if i[0] == block[0] and i[1] == block[1] -1 and i[2] == 0:
+      return block
+    if i[0] == block[0]+1 and i[1] == block[1]-1 and i[2] == 0:
+      return block
+  # case2. 양 side 모두 보일 때
+  k = 0
+  for i in answer:
+    if i[0] == block[0]-1 and i[1] == block[1] and i[2] == 1:
+      for j in answer[(k+1):]:
+        if j[0] == block[0]+1 and j[1] == block[1] and j[2] == 1:
+          return block
+    k += 1
+  return
