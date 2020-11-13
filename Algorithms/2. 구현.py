@@ -362,3 +362,55 @@ def remove_h(block, answer):
     if answer.count([block[0]+x1[j], block[1], block[2]]) and answer.count([block[0]+x2[j], block[1], block[2]]):
       return
   return block[0:3]
+
+# 뱀
+n = int(input())
+apple = [[0*n for _ in range(n)] for _ in range(n)]
+snake = [[1,1]]
+k = int(input())
+for _ in range(k):
+  row, col = map(int, input().split())
+  apple[row-1][col-1] = 1
+  
+turn_sec = []
+turn_dir = []
+l = int(input())
+for _ in range(l):
+  s, d = input().split()
+  turn_sec.append(int(s))
+  turn_dir.append(d)
+dr = 0
+y = [1, 0, -1, 0]
+x = [0, 1, 0, -1]
+sec = 0
+
+while True:
+  # 1초가 지남
+  sec += 1
+  # dir에 따라 다른쪽으로 움직임
+  sx = snake[-1][0] + x[dr]
+  sy = snake[-1][1] + y[dr]
+  # 뱀의 머리가 새롭게 위치할 칸에 자기 몸이나 벽을 만남
+  if snake.count([sx, sy]) or sx>n or sx<1 or sy>n or sy<1:
+    break
+  # 뱀의 머리가 새롭게 위치할 칸에 사과가 있음
+  if apple[sx-1][sy-1]:
+    snake.append([sx, sy])
+  else:
+    snake.pop(0)
+    snake.append([sx, sy])
+  if turn_sec.count(sec):
+    idx = turn_sec.index(sec)
+    dr = onTurnDirection(turn_dir, idx, dr)
+print(sec)
+
+def onTurnDirection(li, idx, dr):
+  if li[idx] == 'L':
+    dr -= 1
+    if dr == -1:
+      dr = 3
+  else:
+    dr += 1
+    if dr == 4:
+      dr = 0
+  return dr
