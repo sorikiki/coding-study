@@ -510,3 +510,39 @@ def turn(direction, c):
   return direction
 
 print(simulate())
+
+# 치킨 배달 (itertools에서 combinations함수 사용한 것이 point)
+import itertools
+
+n, m = map(int, input().split())
+house = []
+chicken = []
+
+for r in range(0, n):
+  li = map(int, input().split())
+  c = 0
+  for k in li:
+    if k == 1:
+      house.append((r, c))
+    if k == 2:
+      chicken.append((r, c))
+    c += 1
+
+arr = []
+for i in chicken:
+  row = []
+  for j in house:
+    row.append(abs(i[0]-j[0])+abs(i[1]-j[1]))
+  arr.append(row)
+
+li2 = []
+for x in itertools.combinations(arr, m):
+  sum = 0
+  for y in range(0, len(house)):
+    s = (n-1)**2
+    for z in range(0, m):
+      s = x[z][y] if x[z][y] < s else s
+    sum += s
+  li2.append(sum)
+print(min(li2))
+
