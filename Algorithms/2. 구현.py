@@ -282,17 +282,19 @@ def solution3(n, build_frame):
   for i in build_frame:
     # 설치
     if i[3]:
+      # 기둥 설치
       if i[2] == 0:
         answer.append(install_v(i, answer))
+      # 보 설치
       else:
         answer.append(install_h(i, answer))
     # 삭제
     else:
-      # 기둥을 삭제하는 경우
+      # 기둥 삭제
       if i[2] == 0:
         if answer.count(remove_v(i,answer)):
           answer.remove(remove_v(i, answer))
-      # 보를 삭제하는 경우
+      # 보 삭제
       else:
         if answer.count(remove_h(i,answer)):
           answer.remove(remove_h(i, answer))
@@ -363,6 +365,36 @@ def remove_h(block, answer):
       return
   return block[0:3]
 
+# 기둥과 보 해설(시간복잡도 O(M**3)으로 해결 가능, 2차원 자료일 경우 다음과 같은 반복문 가능, 원소 IN 배열 구문 활용 가능)
+# 현재 설치된 구조물이 '가능한' 구조물인지 확인하는 함수
+def possible(answer):
+  for x, y, stuff in answer:
+    if stuff == 0: # 설치된 것이 '기둥'
+      # '바닥 위' 혹은 '보의 한쪽 끝부분 위' 혹은 '다른 기둥 위'라면 정상
+      if y == 0 or [x-1, y, 1] in answer or [x, y, 1] in answer or [x, y-1, 0] in answer:
+        continue
+      return False
+    elif stuff == 1: # 설치된 것이 '보'
+      # 한쪽 끝부분이 기둥 위 혹은 양쪽 끝부분이 다른 보와 동시에 연결이라면 정상
+      if [x, y-1, 0] in answer or [x+1, y-1, 0] in answer or ([x-1, y, 1] in answer [x+1, y, 1] in answer):
+        continue
+      return False
+  return True
+
+def solution4(n, build_frame):
+  answer = []
+  for frame in build_frame:
+    x, y, stuff, operate = frame
+    if operate == 0: # 삭제하는 경우
+      answer.remove([x, y, stuff])
+      if not possible(answer):
+        answer.append([x, y, stuff])
+    if operate == 1: # 설치하는 경우
+      answer.append([x, y, stuff])
+      if not possible(answer):
+        answer.remove([x, y, stuff])
+  return sorted(answer)
+
 # 뱀
 n = int(input())
 apple = [[0*n for _ in range(n)] for _ in range(n)]
@@ -387,7 +419,7 @@ sec = 0
 while True:
   # 1초가 지남
   sec += 1
-  # dir에 따라 다른쪽으로 움직임
+  # dir에 따라, 뱀의 머리에 따라 다른쪽으로 움직임
   sx = snake[-1][0] + x[dr]
   sy = snake[-1][1] + y[dr]
   # 뱀의 머리가 새롭게 위치할 칸에 자기 몸이나 벽을 만남
@@ -414,3 +446,67 @@ def onTurnDirection(li, idx, dr):
     if dr == 4:
       dr = 0
   return dr
+
+# 뱀 해설
+n = int(input())
+k = int(input())
+data = [[0] * (n+1) for _ in range(n+1)]
+info = []
+
+# 맵 정보(사과 있는 곳은 1로 표시)
+for _ in range(k):
+  a, b = map(int, input().split())
+  data[a][b] = 1
+
+# 방향 회전 정보 입력
+l = int(input())
+for _ in range(l):
+  x, c = input().split()
+  info.append(int(x), c)
+
+# 동, 서, 남, 북
+  dx = [0, 1, 0, -1]
+  dy = [1, 0, -1, 0]
+
+def simulate():
+  x, y = 1, 1 # 뱀의 머리 위치
+  data[x][y] = 2
+  direction = 0
+  time = 0
+  index = 0
+  q = [(x, y)]
+  while True:
+    nx = x + dx[direction]
+    ny = y + dy[direction]
+    # 맵 범위 안에 있고, 뱀 몸통이 없는 위치라면
+    if 1 <= nx and nx <= n and 1 <= ny and ny <= n and data[nx][ny] != 2:
+      # 사과가 없다면 이동 후 꼬리 제거
+      if data[nx][ny] == 0:
+        data[nx][ny] = 2
+        q.append((nx,ny))
+        px, py = q.pop(0)
+        data[px][py] = 0
+      # 사과가 있다면 이동 후 꼬리 그대로
+      if data[nx][ny] == 1:
+        data[nx][ny] = 2
+        q.append((nx, ny))
+    # 벽이나 몸통에 부딪혔다면,
+    else:
+      time += 1
+      break
+    x, y = nx, ny # 다음 위치로 머리를 이동
+    time += 1
+    if index < l and time == info[index][0]:
+      direction = turn(direction, info[index][1])
+      index += 1
+  return time
+
+def turn(direction, c):
+  if c == "L":
+    direction = (direction-1)%4
+  else:
+    direction = (direction+1)%4
+
+  return direction
+
+print(simulate())
