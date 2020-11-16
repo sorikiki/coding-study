@@ -51,3 +51,30 @@ while N > 1:
   print(result) 
 end_time = time.time()
 print(end_time-start_time)
+
+# 모험가 길드
+# 그룹 수가 최대가 되려면 그룹 당 구성원 수가 적어야 한다.
+n = int(input())
+li = list(map(int, input().split()))
+# 오름차순으로 정렬
+li.sort() 
+group = 0
+k = 0
+for i in li:
+  k += 1
+  if k>=i:
+    group += 1
+    k = 0
+print(group)
+
+# 문자열 뒤집기 
+s = input()
+li = []
+x = 2
+for i in s:
+  if x != i:
+    li.append(i)
+  x = i
+zero = li.count('0')
+one = li.count('1')
+print(min(zero, one))
