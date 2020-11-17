@@ -78,3 +78,36 @@ for i in s:
 zero = li.count('0')
 one = li.count('1')
 print(min(zero, one))
+
+# 만들 수 없는 금액(집합 자료형의 활용)
+import itertools
+n = int(input())
+li = list(map(int, input().split()))
+answer = set()
+
+for i in range(1, n+1):
+  data = list(itertools.combinations(li, i))
+  for j in data:
+    answer.add(sum(j))
+answer = set(range(1, max(answer)+1)) - answer
+print(min(answer))
+
+# 만들 수 없는 금액(해설, 그리디 알고리즘에 익숙해지기 ❗)
+n = int(input())
+data = list(map(int, input().split()))
+data.sort()
+target = 1
+for x in data:
+  if target < x:
+    break
+  target += x
+print(target)
+
+# 볼링공 고르기
+n, m = map(int, input().split())
+li = list(map(int, input().split()))
+sum = 0
+for i in range(0, len(li)):
+  li2 = li[i+1:]
+  sum += len(li2) - li2.count(li[i])
+print(sum)
