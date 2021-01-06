@@ -25,6 +25,7 @@ print(stack[::-1]) # [4, 2, 1]
 
 # ✅ 큐: 선입선출 구조
 # 큐 구현을 위한 라이브러리 이용해보기
+# deque: A list-like sequence optimized for data accesses near its endpoints.
 from collections import deque
 queue = deque()
 queue.append(1)
@@ -38,7 +39,7 @@ queue.reverse()
 print(list(queue)) # [5, 4, 3, 2]
 
 # ✅ 재귀함수: 자기 자신을 다시 호출하는 함수
-# 내부적으로 스택 자료구조와 동일
+# 내부적으로 스택 자료구조와 동일. 가장 마지막에 호출한 함수가 먼저 수행을 끝내야 그 앞의 함수 호출이 종료되기 때문
 def recursive_function(i):
   if i == 3:
     return
@@ -46,10 +47,21 @@ def recursive_function(i):
   recursive_function(i+1)
   print(i, '번째 재귀 함수 종료')
 
+recursive_function(1)
+# 1번째 재귀 함수에서 2번째 재귀 함수를 호출
+# 2번째 재귀 함수에서 3번째 재귀 함수를 호출
+# 2번째 재귀 함수 종료
+# 1번째 재귀 함수 종료
+
 def factorial_recursive(n):
   if n <= 1:
     return 1
   return n*factorial_recursive(n-1)
+
+factorial_recursive(3)
+# 6
+
+# RecursionError: 무한대로 재귀 호출을 진행한 경우 발생하는 error
 
 # ✅ DFS: 깊이 우선 탐색(특정한 경로로 탐색하다가 특정한 상황에서 최대한 깊숙이 들어가서 노드를 방문한 후, 다시 돌아가 다른 경로로 탐색하는 알고리즘)
 # ✔ 노드와 간선의 관계를 표현하는 두 가지 방식
@@ -57,7 +69,7 @@ def factorial_recursive(n):
 INF = 999999999
 graph = [ 
   [0, 7, 5],
-  [7, 0,INF],
+  [7, 0, INF],
   [5, INF, 0]
 ]
 
@@ -81,5 +93,32 @@ print(graph)
 # => 속도: 그러나, 이와 같은 속성 때문에 1번에 비해 특정한 두 노드가 연결되어 있는지에 대한 정보를 얻는 속도가 느리다.
 
 # - DFS는 스택 자료구조에 기초한다는 점에서 구현이 간단하다.
-# => 실제 구현은 재귀함수를 이용했을 때 매우 간결
+# => 실제 구현은 스택을 쓰지 않아도 되며, 재귀함수를 이용했을 때 매우 간결
 # - 탐색을 수행함에 있어서 데이터의 개수가 N개인 경우 O(N)의 시간이 소요된다.
+
+def dfs(graph, v, visited): 
+  # graph는 노드와 간선의 관계를 나타내는 2차원 리스트, v는 시작노드
+  # visited는 각 노드가 방문된 정보를 나타내는 1차원 리스트
+  visited[v] = True
+  print(v, end=' ') # 탐색 순서에 따라 출력되는 것
+  for i in graph[v]:
+    if not visited[i]:
+      dfs(graph, i, visited)
+
+graph = [
+	[],
+	[2,3,8],
+	[1,7],
+	[1,4,5],
+	[3,5],
+	[3,4],
+	[7],
+	[2,6,8],
+	[1,7],
+	]
+
+visited = [False] * 9
+
+dfs(graph, 1, visited)
+# 1 2 7 6 8 3 4 5
+
