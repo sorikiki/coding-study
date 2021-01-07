@@ -122,3 +122,23 @@ visited = [False] * 9
 dfs(graph, 1, visited)
 # 1 2 7 6 8 3 4 5
 
+# ✅ BFS: 너비 우선 탐색(가까운 노드부터 탐색하는 알고리즘)
+# '큐'를 이용하는 것, 실제 구현할 때에도 deque 라이브러리를 이용
+# N개의 데이터를 처리함에 있어서, O(N)의 시간이 소요됨
+# 실제 수행 시간이 DFS보다 좋은 편
+
+from collections import deque
+
+def bfs(graph, start, visited):
+  queue = deque([start])
+  visited[start] = True
+  while queue:
+    v = queue.popleft()
+    print(v, end=' ')
+    for i in graph[v]:
+      if not visited[i]:
+        queue.append(i)
+        visited[i] = True
+bfs(graph, 1, visited) # 1 2 3 8 7 4 5 6
+
+# 🔥 정리: DFS는 '스택'을 기초로 '재귀 함수'를 이용, BFS는 '큐'를 기초로 이용
