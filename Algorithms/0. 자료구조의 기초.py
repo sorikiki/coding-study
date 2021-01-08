@@ -142,3 +142,61 @@ def bfs(graph, start, visited):
 bfs(graph, 1, visited) # 1 2 3 8 7 4 5 6
 
 # 🔥 정리: DFS는 '스택'을 기초로 '재귀 함수'를 이용, BFS는 '큐'를 기초로 이용
+
+# ✅ 음료수 얼려 먹기
+N, M = map(int, input().split())
+graph = []
+for _ in range(N):
+  graph.append(list(map(int, input())))
+
+def dfs2(x, y):
+  if x <= -1 or x >= N or y <= -1 or y >= M:
+    return False
+  if graph[x][y] == 0:
+    graph[x][y] = 1
+    dfs2(x+1, y)
+    dfs2(x, y+1)
+    dfs2(x-1, y)
+    dfs2(x, y-1)
+    return True
+  return False
+
+result = 0
+for i in range(N):
+  for j in range(M):
+    if dfs2(i, j) == True:
+      result += 1
+
+print(result)
+
+# 미로탈출
+from collections import deque
+
+N, M = map(int, input().split())
+graph = []
+for _ in range(N):
+  graph.append(list(map(int, input())))
+
+# 상하좌우
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+def bfs(x ,y):
+  queue = deque()
+  queue.append((x, y))
+  while queue:
+    x, y = queue.popleft()
+    for i in range(4):
+      nx = x + dx[i]
+      ny = y + dy[i]
+      if nx<0 or nx>=N or ny<0 or ny>=M:
+        continue
+      if graph[nx][ny] == 0:
+        continue
+      # 해당 노드를 처음 방문하는 경우만 기록
+      if graph[nx][ny] == 1:
+        graph[nx][ny] = graph[x][y] + 1
+        queue.append((nx, ny))
+  return graph[N-1][M-1]
+
+print(bfs(0, 0))
+

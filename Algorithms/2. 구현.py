@@ -545,4 +545,3 @@ for x in itertools.combinations(arr, m):
     sum += s
   li2.append(sum)
 print(min(li2))
-
