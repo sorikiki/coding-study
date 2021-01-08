@@ -180,7 +180,7 @@ for _ in range(N):
 # 상하좌우
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
-def bfs(x ,y):
+def bfs2(x ,y):
   queue = deque()
   queue.append((x, y))
   while queue:
@@ -198,5 +198,34 @@ def bfs(x ,y):
         queue.append((nx, ny))
   return graph[N-1][M-1]
 
-print(bfs(0, 0))
+print(bfs2(0, 0))
 
+# ✅ 특정 거리의 도시 찾기(bfs)
+from collections import deque
+
+n, m, k, x = map(int, input().split())
+graph = [[] for _ in range(n+1)]
+for _ in range(m):
+  a, b = map(int, input().split())
+  graph[a].append(b)
+  graph[b].append(a)
+
+visited = [0] * (n+1)
+def q15(num):
+  queue = deque([])
+  queue.append(num)
+  while queue:
+    p = queue.popleft()
+    for i in graph[p]:
+      if i == 1:
+        continue
+      if visited[i] == 0:
+        queue.append(i)
+        visited[i] = visited[p] + 1
+  return [_ for _ in range(n+1) if visited[_] == k]
+
+if not q15(x):
+  print(-1)
+else:
+  for _ in q15(x):
+    print(_)
