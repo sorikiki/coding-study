@@ -76,3 +76,48 @@ def print_your_name(name, age):
     print(name + " you are " + str(age))
 
 print_your_name('dasol', 23) # dasol your are 23
+
+from itertools import combinations
+
+n, m = map(int, input().split())
+graph = []
+for _ in range(n):
+  li = list(map(int, input().split()))
+  graph.append(li)
+
+# 0인 칸 중 세 개를 뽑아 1로 바꾸기
+zero = []
+for i in range(n):
+  for j in range(m):
+    if graph[i][j] == 0:
+      zero.append((i,j))
+
+candid = list(combinations(zero, 3))
+
+visited = [[0] * m] * n
+
+def q16(x, y):
+  global result
+  if x<0 or x>=n or y<0 or y>=m:
+    return False
+  if not (visited[x][y] and visited[x][y] == 1):
+    visited[x][y] = True
+    graph[x][y] = 2
+    q16(x-1, y)
+    q16(x, y-1)
+    q16(x+1, y)
+    q16(x, y+1)
+    return True
+  return False
+  
+
+
+for a in candid:
+  for b in a:
+    graph[b[0]][b[1]] = 1
+    for c in range(n):
+      for d in range(m):
+        if graph[c][d] == 2 and visited[c][d] == False:
+          q16(c, d)
+    result = [len([p for p in q if p==0]) for q in graph]
+    print(sum(result))
