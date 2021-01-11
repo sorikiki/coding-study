@@ -256,14 +256,14 @@ dy = [0, 1, 0, -1]
 result = 0
 
 # DFS를 이용해 각 바이러스가 사방으로 퍼지도록 하는 메서드
-def virus(x, y):
+def virus2(x, y):
   for i in range(4):
     nx = x + dx[i]
     ny = y + dy[i]
     if nx >= 0 and nx <n and ny>=0 and ny<m:
       if temp[nx][ny] == 0:
         temp[nx][ny] = 2
-        virus(nx, ny)
+        virus2(nx, ny)
 
 # 현재 맵에서 안전 영역의 크기를 계산하는 메서드
 def get_score():
@@ -285,7 +285,7 @@ def dfs3(count):
     for i in range(n):
       for j in range(m):
         if temp[i][j] == 2:
-          virus(i, j)
+          virus2(i, j)
     # 안전 영역의 최댓값 계산
     result = max(result, get_score())
     return
@@ -370,7 +370,7 @@ for i in range(n+1):
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
 
-def spreadVirus(row, col, time):
+def spreadVirus2(row, col, time):
   for i in range(4):
     nx = row + dx[i]
     ny = col + dy[i]
@@ -389,8 +389,53 @@ for _ in range(s):
       break
     if queue:
       z = queue.popleft() # [1,1,0]
-      spreadVirus(z[0], z[1], time)
+      spreadVirus2(z[0], z[1], time)
     else:
       break
 
 print(virus[x][y])
+
+# ✅ 괄호변환
+p = input()
+
+def checkNumber(str):
+  a = 0
+  b = 0
+  for i in str:
+    if i == "(":
+      a += 1
+    else:
+      b += 1
+    if a == b and a >= 1:
+      break
+  return str[:a+b], str[a+b:]
+
+# 스택 원리 이용하기
+def checkBalance(u):
+  count = 0 # 왼쪽 괄호의 개수
+  for i in u:
+    if i == "(":
+      count += 1
+    else:
+      if count == 0:
+        return False
+      count -= 1
+  return True
+
+  
+
+
+def divideString(str):
+  result = ''
+  if str == '':
+    return result
+  u, v = checkNumber(str)
+  if checkBalance(u):
+    result = u + divideString(v)
+  else:
+    result = ("(" + divideString(v) + ")")
+    temp = [")" if i == "(" else "(" for i in u[1:-1] ] 
+    result += ''.join(temp)
+  return result
+
+print(divideString(p))
