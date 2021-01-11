@@ -302,3 +302,95 @@ def dfs3(count):
 dfs3(0)
 print(result)
 # 9
+
+# ✅ 경쟁적 전염
+# 큐 사용 하지 않음 = > 치명적인 단점: 시간 초과
+n, k = map(int, input().split())
+virus = [[0]*(n+1)]
+new = [[0]*(n+1) for _ in range(n+1)]
+for _ in range(n):
+  user = list(map(int, input().split()))
+  virus.append([0] + user)
+s, x, y = map(int, input().split())
+
+# 상, 우, 하, 좌
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+# virus를 퍼뜨리는 함수
+def spreadVirus(x, y, t):
+  nx = x + dx[t]
+  ny = y + dy[t]
+  if nx>=1 and nx<=n and ny>=1 and ny<=n:
+    if new[nx][ny] == 0:
+      new[nx][ny] = virus[x][y]
+
+# s초후에 특정 virus를 찾는 함수
+# 1초에 거리1만큼 spread하는 제한 조건 기억
+def checkVirus(num):
+  while num <= k:
+    for i in range(1,n+1):
+      for j in range(1, n+1):
+        if virus[i][j] == num:
+          for t in range(4):
+            spreadVirus(i, j, t)
+    for i in range(n+1):
+      for j in range(n+1):
+        if new[i][j] == num and virus[i][j] == 0:
+          virus[i][j] = num
+    num += 1
+
+for _ in range(s):
+  num = 1
+  checkVirus(num)
+print(virus[x][y])
+
+# ✅ 경쟁적 전염
+from collections import deque
+
+queue = deque() 
+
+n, k = map(int, input().split())
+virus = [[0]*(n+1)]
+for _ in range(n):
+  user = list(map(int, input().split()))
+  virus.append([0] + user)
+s, x, y = map(int, input().split())
+
+time = 0
+
+# 큐를 초기화(행, 열, 초)
+for i in range(n+1):
+  for j in range(n+1):
+    for t in range(k):
+      if virus[i][j] == (t+1):
+        queue.append((i, j, time))
+
+# 상, 하, 좌, 우
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+def spreadVirus(row, col, time):
+  for i in range(4):
+    nx = row + dx[i]
+    ny = col + dy[i]
+    # 시험관 밖을 벗어나지 않고
+    if nx>= 1 and nx<=n and ny>=1 and ny<=n:
+      # 방문한 곳이 아니라면
+      if virus[nx][ny] == 0:
+        queue.append((nx, ny, time))
+        virus[nx][ny] = virus[row][col]
+
+for _ in range(s):
+  time += 1
+  while True:
+    # 시간대가 아니라면 종료
+    if queue[0][-1] != (time-1):
+      break
+    if queue:
+      z = queue.popleft() # [1,1,0]
+      spreadVirus(z[0], z[1], time)
+    else:
+      break
+
+print(virus[x][y])
