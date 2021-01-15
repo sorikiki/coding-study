@@ -410,7 +410,6 @@ def checkNumber(str):
       break
   return str[:a+b], str[a+b:]
 
-# 스택 원리 이용하기
 def checkBalance(u):
   count = 0 # 왼쪽 괄호의 개수
   for i in u:
@@ -439,3 +438,83 @@ def divideString(str):
   return result
 
 print(divideString(p))
+
+# ✅ 연산자 끼워 넣기
+n = int(input())
+data = list(map(int, input().split()))
+add, sub, mul, div = map(int, input().split())
+
+max_value = -1e19
+min_value = 1e19
+
+def q19(i, now):
+  global max_value, min_value, add, sub, mul, div
+  if i == n:
+    min_value = min(min_value, now)
+    max_value = max(max_value, now)
+  
+  else:
+    if add > 0:
+      add -= 1
+      q19(i+1, now + data[i])
+      add += 1
+    if sub > 0:
+      sub -= 1
+      q19(i+1, now - data[i])
+      sub += 1
+    if mul > 0:
+      mul -= 1
+      q19(i+1, now * data[i])
+      mul += 1
+    if div > 0:
+      div -= 1
+      if now < 0:
+        q19(i+1, -(-now // data[i]))
+      else:
+        q19(i+1, now // data[i])
+      div += 1
+    
+q19(1, data[0])
+
+print(max_value)
+print(min_value)
+
+# ➕ 중복순열 라이브러리를 사용한 풀이 
+from itertools import product
+
+n = int(input())
+data = list(map(int, input().split()))
+add, sub, mul, div = map(int, input().split())
+unfiltered = list(product(['+','-','*','/'], repeat=(n-1)))
+filtered = []
+
+# unfiltered: 중복순열 결과
+# 중복순열이 
+for i in unfiltered:
+  if i.count('+')<=add and i.count('-')<=sub and i.count('*')<=mul and i.count('/')<=div:
+    filtered.append(i)
+
+min_value = 1e19
+max_value = -1e19
+
+for i in filtered:
+  now = data[0]
+  for j in range(n-1):
+    if i[j] == '+':
+      now += data[j+1]
+    if i[j] == '-':
+      now -= data[j+1]
+    if i[j] == '*':
+      now *= data[j+1]
+    if i[j] == '/':
+      if now < 0:
+        now = -(-now // data[j+1])
+      else:
+        now //= data[j+1]
+  min_value = min(min_value, now)
+  max_value = max(max_value, now)
+
+print(max_value)
+print(min_value)
+
+
