@@ -517,4 +517,55 @@ for i in filtered:
 print(max_value)
 print(min_value)
 
+# ✅ 감시 피하기
+from itertools import combinations
 
+n = int(input())
+board = []
+teachers = []
+space = []
+
+for i in range(n):
+  board.append(list(input().split()))
+  for j in range(n):
+    if board[i][j] == 'T':
+      teachers.append((i, j))
+    if board[i][j] == 'X':
+      space.append((i, j))
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+# 한 선생님의 위치에서 네 가지 방향으로 확인
+def broadenArea(obstacles, k, teacher_row, teacher_col):
+  while True: 
+    # 새로운 위치(행, 열) 변수 초기화
+    nx = teacher_row + dx[k]
+    ny = teacher_col + dy[k]
+    if nx<0 or nx>=n or ny<0 or ny>=n:
+      return True
+    if obstacles.count((nx, ny)):
+      return True
+    if board[nx][ny] == 'S':
+      return False
+    teacher_row = nx
+    teacher_col = ny
+  
+  
+
+# 장애물 설치할 3군데 정하기
+def main():
+  for i in combinations(space, 3):
+    answer = True
+    for x, y in teachers:
+      for k in range(4):
+        if not broadenArea(i, k, x, y):
+          answer = False
+    # 네 가지 방향 모두 탐색한 후
+    if answer:
+      print("YES")
+      return
+  print("NO")
+  return
+  
+main()
