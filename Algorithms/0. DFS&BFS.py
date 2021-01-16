@@ -569,3 +569,59 @@ def main():
   return
   
 main()
+
+# ✅ 인구 이동
+n, l, r = map(int, input().split())
+population = []
+for _ in range(n):
+  population.append(list(map(int, input().split())))
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+answer = 0
+
+while True:
+  visited = [[0]*n for _ in range(n)]
+  num_group = 1
+  for i in range(n):
+    for j in range(n):
+      block_num = people_num = 0
+      group = []
+      if q21(i, j):
+        num = people_num//block_num
+        for x, y in group:
+          population[x][y] = num
+      else:
+        continue
+      num_group = max(num_group, len(group))
+  if num_group == 1:
+    break
+  else:
+    answer += 1
+
+def q21(x, y):
+  global block_num
+  global people_num
+
+  if visited[x][y] == 1:
+    return False
+
+  visited[x][y] = 1
+  block_num += 1
+  people_num += population[x][y]
+  group.append((x,y))
+
+  for i in range(4):
+    nx = x+dx[i]
+    ny = y+dy[i]
+    if nx>=0 and nx<n and ny>=0 and ny<n:
+      result = abs(population[nx][ny] - population[x][y])
+    else:
+      continue
+    if result >= l and result <= r:
+      q21(nx, ny)
+  return True
+
+
+print(answer)
