@@ -570,7 +570,7 @@ def main():
   
 main()
 
-# ✅ 인구 이동
+# ✅ 인구 이동(DFS: RecursionError)
 n, l, r = map(int, input().split())
 population = []
 for _ in range(n):
@@ -625,3 +625,76 @@ def q21(x, y):
 
 
 print(answer)
+
+# ✅ 인구 이동(BFS: 시간초과)
+# from collections import deque
+
+# n, l, r = map(int, input().split())
+# population = []
+# for _ in range(n):
+#   population.append(list(map(int, input().split())))
+
+# answer = 0
+
+# dx = [-1, 1, 0, 0]
+# dy = [0, 0, -1, 1]
+
+# # BFS 메소드
+# def q21(i, j):
+#   people_num = population[i][j]
+#   group_num = 1
+#   group = []
+
+#   queue = deque()
+#   queue.append((i, j))
+#   group.append((i, j))
+#   visited[i][j] = 1
+
+#   while queue:
+#     row, col = queue.popleft()
+
+#     for k in range(4):
+#       nx = row + dx[k]
+#       ny = col + dy[k]
+#       if nx >= 0 and nx < n and ny >= 0 and ny < n:
+#         if visited[nx][ny] == 0:
+#           gap = abs(population[nx][ny] -
+#                         population[row][col])
+#           if gap >= l and gap <= r:
+#             queue.append((nx, ny))
+#             visited[nx][ny] = 1
+#             people_num += population[nx][ny]
+#             group_num += 1
+#             group.append((nx, ny))
+#   return people_num, group_num, group
+
+# # 인구 수 조정
+# def changePopulation(people, block, group):
+#   num = people // block
+#   for x, y in group:
+#     population[x][y] = num
+
+
+# while True:
+#   # 연합인 구성원들을 포함하는 변수 bundle
+#   bundle = []
+#   # 방문처리 초기화
+#   visited = [[0] * n for _ in range(n)]
+
+#   # 연합 형성
+#   for i in range(n):
+#     for j in range(n):
+#       if visited[i][j] == 0:
+#         people, block, group = q21(i, j)
+#         if block > 1:
+#           bundle.append((people, block, group))
+  
+#   # 연합이 형성되지 않았다면
+#   if not bundle:
+#     break
+#   # 연합이 적어도 하나 형성되었다면
+#   for x, y, z in bundle:
+#     changePopulation(x, y, z)
+#   answer += 1
+
+# print(answer)
