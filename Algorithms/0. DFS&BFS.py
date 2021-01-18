@@ -580,26 +580,6 @@ dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
 
 answer = 0
-
-while True:
-  visited = [[0]*n for _ in range(n)]
-  num_group = 1
-  for i in range(n):
-    for j in range(n):
-      block_num = people_num = 0
-      group = []
-      if q21(i, j):
-        num = people_num//block_num
-        for x, y in group:
-          population[x][y] = num
-      else:
-        continue
-      num_group = max(num_group, len(group))
-  if num_group == 1:
-    break
-  else:
-    answer += 1
-
 def q21(x, y):
   global block_num
   global people_num
@@ -626,75 +606,86 @@ def q21(x, y):
 
 print(answer)
 
+while True:
+  visited = [[0]*n for _ in range(n)]
+  num_group = 1
+  for i in range(n):
+    for j in range(n):
+      block_num = people_num = 0
+      group = []
+      if q21(i, j):
+        num = people_num//block_num
+        for x, y in group:
+          population[x][y] = num
+      else:
+        continue
+      num_group = max(num_group, len(group))
+  if num_group == 1:
+    break
+  else:
+    answer += 1
+
+
 # ✅ 인구 이동(BFS: 시간초과)
-# from collections import deque
+# 본 코드를 refactoring을 거침. 백준에 python3로 코드제출을 한 결과, 계속 시간초과가 떠서 Pypy3로 변경하여 제출했더니 정답처리됨.
+from collections import deque
+n, l, r = map(int, input().split())
+population = []
+for _ in range(n):
+  population.append(list(map(int, input().split())))
 
-# n, l, r = map(int, input().split())
-# population = []
-# for _ in range(n):
-#   population.append(list(map(int, input().split())))
+answer = 0
 
-# answer = 0
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
 
-# dx = [-1, 1, 0, 0]
-# dy = [0, 0, -1, 1]
-
-# # BFS 메소드
-# def q21(i, j):
-#   people_num = population[i][j]
-#   group_num = 1
-#   group = []
-
-#   queue = deque()
-#   queue.append((i, j))
-#   group.append((i, j))
-#   visited[i][j] = 1
-
-#   while queue:
-#     row, col = queue.popleft()
-
-#     for k in range(4):
-#       nx = row + dx[k]
-#       ny = col + dy[k]
-#       if nx >= 0 and nx < n and ny >= 0 and ny < n:
-#         if visited[nx][ny] == 0:
-#           gap = abs(population[nx][ny] -
-#                         population[row][col])
-#           if gap >= l and gap <= r:
-#             queue.append((nx, ny))
-#             visited[nx][ny] = 1
-#             people_num += population[nx][ny]
-#             group_num += 1
-#             group.append((nx, ny))
-#   return people_num, group_num, group
-
-# # 인구 수 조정
-# def changePopulation(people, block, group):
-#   num = people // block
-#   for x, y in group:
-#     population[x][y] = num
-
-
-# while True:
-#   # 연합인 구성원들을 포함하는 변수 bundle
-#   bundle = []
-#   # 방문처리 초기화
-#   visited = [[0] * n for _ in range(n)]
-
-#   # 연합 형성
-#   for i in range(n):
-#     for j in range(n):
-#       if visited[i][j] == 0:
-#         people, block, group = q21(i, j)
-#         if block > 1:
-#           bundle.append((people, block, group))
+# BFS 메소드
+def q21(i, j):
+  people_num = population[i][j]
+  group = [(i, j)]
+  queue = deque([(i, j)])
   
-#   # 연합이 형성되지 않았다면
-#   if not bundle:
-#     break
-#   # 연합이 적어도 하나 형성되었다면
-#   for x, y, z in bundle:
-#     changePopulation(x, y, z)
-#   answer += 1
+  visited[i][j] = 1
+  
+  # 큐가 빌 때까지 반복
+  while queue:
+    row, col = queue.popleft()
+    for k in range(4):
+      nx = row + dx[k]
+      ny = col + dy[k]
+      if nx >= 0 and nx < n and ny >= 0 and ny < n:
+        if visited[nx][ny] == 0:
+          gap = abs(population[nx][ny] -
+                        population[row][col])
+          if l <= gap <= r:
+            queue.append((nx, ny))
+            visited[nx][ny] = 1
+            people_num += population[nx][ny]
+            group.append((nx, ny))
+  
+  # 연합이 형성된 후 이들끼리 인구를 분배
+  for i, j in group:
+    population[i][j] = people_num // len(group)
+  return
 
-# print(answer)
+
+while True:
+  # bfs를 수행하는 횟수 변수
+  index = 0
+
+  # 방문처리 초기화
+  visited = [[0] * n for _ in range(n)]
+
+  # 연합 형성
+  for i in range(n):
+    for j in range(n):
+      if visited[i][j] == 0:
+        q21(i, j)
+        index += 1
+  
+  # 모든 인구 이동이 끝난 경우
+  if index == n*n:
+    break
+  answer += 1
+
+print(answer)

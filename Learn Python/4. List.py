@@ -99,7 +99,7 @@ print(sorted_names) # ['Angel', 'Buffy', 'Giles', 'Willow', 'Xander'] => alphabe
 # : a data structure to store multiple pieces of data
 # ✔ differences from Lists
 # => immutable: do not add, remove or change
-# => are always enclosed by ()
+# => not always enclosed by (). look the example below.
 # => usually contain a heterogeneous sequence of elements that are accessed via unpacking or indexing.(negative indexing also available.)
 # cf. Lists are mutable, and their elements are usually homogeneous and are accessed by iterating over the list.
 
