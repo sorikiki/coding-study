@@ -689,3 +689,63 @@ while True:
   answer += 1
 
 print(answer)
+
+
+# ✅ 블록 이동하기
+# 전형적인 BFS문제로, 최단거리를 구하기 위해서는 방문처리가 필요함.
+# 리스트, 튜플, 집합 자료형을 모두 사용한 중요한 문제임.
+
+# 집합 자료형은 unordered set 이므로 인덱싱 불가하므로 리스트로의 변환이 필수적
+# ({(1, 1), (1, 2)}, 0)
+from collections import deque
+
+def get_next_pos(pos, board):
+  new_pos = [] # 반환 결과(이동 가능한 위치들)
+  pos = list(pos) # 집합을 리스트 형태로
+  pos1_x, pos1_y, pos2_x, pos2_y = pos[0][0], pos[0][1], pos[1][0], pos[1][1]
+  # 상, 하, 좌, 우 이동(로봇의 방향과 무관)
+  dx = [-1, 1, 0, 0]
+  dy = [0, 0, -1, 1]
+  for i in range(4):
+    next_pos1_x, next_pos1_y, next_pos2_x, next_pos2_y = pos1_x + dx[i], pos1_y + dy[i], pos2_x + dx[i], pos2_y + dy[i]
+    if board[next_pos1_x][next_pos1_y] == 0 and board[next_pos2_x][next_pos2_y] == 0:
+      new_pos.append({(next_pos1_x, next_pos1_y), (next_pos2_x, next_pos2_y)})
+  # 로봇이 가로로 놓여있는 경우
+  if pos1_x == pos2_x:
+    for i in [-1, 1]: # 위쪽으로 회전하거나, 아래쪽으로 회전
+      if board[pos1_x+i][pos1_y] == 0 and board[pos2_x+i][pos2_y] == 0:
+        new_pos.append({(pos1_x, pos1_y), (pos1_x+i, pos1_y)})
+        new_pos.append({(pos2_x, pos2_y), (pos2_x+i, pos2_y)})
+  # 로봇이 세로로 놓여있는 경우
+  elif pos1_y == pos2_y:
+    for i in [-1, 1]: # 왼쪽으로 회전하거나, 오른쪽으로 회전
+      if board[pos1_x][pos1_y+i] == 0 and board[pos2_x][pos2_y+i] == 0:
+        new_pos.append({(pos1_x, pos1_y+i), (pos1_x, pos1_y)})
+        new_pos.append({(pos2_x, pos2_y+i), (pos2_x, pos2_y)})
+  # 현재 위치에서 이동할 수 있는 위치를 반환
+  return new_pos
+
+def solution(board):
+  n = len(board)
+  new_board = [[1] * (n+2) for _ in range(n+2)]
+  for i in range(1, n+1):
+    for j in range(1, n+1):
+      new_board[i][j] = board[i-1][j-1]
+    
+  q = deque()
+  visited = []
+  pos = {(1,1), (1,2)} # 시작 위치 설정
+  q.append((pos, 0)) # 큐를 삽입한 뒤에
+  visited.append(pos) # 방문 처리(리스트)
+
+  while True:
+    pos, cost = q.popleft()
+    # (n, n) 위치에 로봇이 도달했다면
+    if (n, n) in pos:
+      return cost
+    # 현재 위치에서 이동할 수 있는 위치 확인
+    for next_pos in get_next_pos(pos, new_board):
+      # 방문 하지 않는 위치라면
+      if next_pos not in visited:
+        q.append((next_pos, cost+1))
+        visited.append(next_pos) 
