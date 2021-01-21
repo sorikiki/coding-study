@@ -190,10 +190,10 @@ takes_many_args(*long_list_of_args)
 # Prints "145,Mexico City,10.9,85C"
 
 # - Similarly we can use ** to destructure a dictionary.
-def pour_from_sink(temperature="Warm", flow="Medium")
-  set_temperature(temperature)
-  set_flow(flow)
-  open_sink()
+# def pour_from_sink(temperature="Warm", flow="Medium"):
+#   set_temperature(temperature)
+#   set_flow(flow)
+#   open_sink()
 
 # Our function takes two keyword arguments
 # If we make a dictionary with their parameter names...
@@ -203,7 +203,7 @@ sink_open_kwargs = {
 }
 
 # We can destructure them an pass to the function
-pour_from_sink(**sink_open_kwargs)
+# pour_from_sink(**sink_open_kwargs)
 # Equivalent to the following:
 # pour_from_sink(temperature="Hot", flow="Slight")
 
