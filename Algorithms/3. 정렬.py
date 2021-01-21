@@ -138,3 +138,16 @@ for i in range(3):
     array_a[i], array_b[i] = array_b[i], array_a[i]
 
 print(sum(array_a))
+
+# ✅ 국영수
+n = int(input())
+data = []
+for _ in range(n):
+    data.append(input().split())
+
+
+data.sort(key=lambda info: (-int(info[1]), int(info[2]), (-int(info[3]), info[0])))
+
+for i in data:
+    print(i[0])
+
