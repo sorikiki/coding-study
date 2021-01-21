@@ -98,3 +98,43 @@ result = sorted(array, key=setting) # 리스트의 원소의 두번째 인자에
 # : 항상 최악의 경우에도 시간 복잡도 O(NlogN)을 보장.
 # => 문제에서 별도의 요구가 없다면 단순히 정렬해야 하는 상황에서는 기본 정렬 라이브러리를 사용하고
 # => 데이터의 범위가 한정되어 있으며 더 빠르게 동작해야 할 때는 계수 정렬을 사용하자.
+
+# ✅ 예제문제
+# ◽ 위에서 아래로
+n = int(input())
+data = []
+for _ in range(n):
+  data.append(int(input()))
+data.sort(reverse=True)
+
+for i in data:
+  print(i, end= ' ')
+
+# ◽ 성적이 낮은 순서로 학생 출력하기
+# ✔ 서로 다른 유형의 데이터(이름, 점수)가 들어있는 container로서의 자료형은 튜플로!
+# ✔ lambda 표현식 익히기
+n = int(input())
+data = []
+
+for _ in range(n):
+  input_data = input().split()
+  data.append((input_data[0], int(input_data[1])))
+
+data = sorted(data, key=lambda student: student[1])
+
+for i in data:
+  print(i[0], end=' ')
+
+# ◽ 두 배열의 원소 교체
+n, k = map(int, input().split())
+array_a = list(map(int, input().split()))
+array_b = list(map(int, input().split()))
+
+array_a.sort()
+array_b.sort(reverse=True)
+
+for i in range(3):
+  if array_a[i] < array_b[i]:
+    array_a[i], array_b[i] = array_b[i], array_a[i]
+
+print(sum(array_a))

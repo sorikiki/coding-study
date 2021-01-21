@@ -62,7 +62,7 @@ print(chorus_lines) # ❕ ['And if you said, "This life ain\'t good enough."', '
 # Be careful, how elements of a new list seem to us. Also, notice that Python automatically escaped the ' character when it created the new list.
 
 # ◽ Joining (Don't forget this method is a subset of string methods.)
-# - .join() is essentially the opposite of .split(), it joins a list of strings together with a given delimiter.
+# - .join() is essentially the opposite of .split(), it joins a list of "strings"(int ❌❌) together with a given delimiter.
 # => It is weird because with .split() the argument was the delimiter, but now the argument is the list.
 # => This means that The string .join() acts on is the delimiter you want to join with, therefore the list you want to join has to be the argument.
 my_munequita = ['My', 'Spanish', 'Harlem', 'Mona', 'Lisa']
