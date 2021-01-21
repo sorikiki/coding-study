@@ -151,3 +151,14 @@ data.sort(key=lambda info: (-int(info[1]), int(info[2]), (-int(info[3]), info[0]
 for i in data:
     print(i[0])
 
+# ✅ 안테나
+n = int(input())
+house = list(map(int, input().split()))
+house_sorted = sorted(house)
+if n % 2 == 0:
+    print(house_sorted[n//2-1])
+else:
+    print(house_sorted[n//2])
+
+# if 와 else로 나눠쓸 필요도 없이, 그저 print(house_sorted[n//2]) 하면 더 concise해짐.
+
