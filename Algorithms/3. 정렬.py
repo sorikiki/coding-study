@@ -162,3 +162,20 @@ else:
 
 # if 와 else로 나눠쓸 필요도 없이, 그저 print(house_sorted[n//2]) 하면 더 concise해짐.
 
+# ✅ 카드 정렬하기: ZeroDivisionError 처리할 것
+def solution(N, stages):
+    total = len(stages)
+    answer = []
+
+    for i in range(1, N+1):
+        if total == 0:
+          answer.append((i, 0))
+          continue
+        num = stages.count(i) # i번재 스테이지에서 실패한 이용자 수
+        answer.append((i, num/total)) # 스테이지 번호와 실패율을 튜플로 묶어 리스트에 저장
+        total -= num
+        
+        
+    answer.sort(reverse=True, key=lambda x: x[1])
+    answer = [x for x, y in answer]
+    return answer
