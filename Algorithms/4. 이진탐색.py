@@ -74,3 +74,33 @@ else:
 import sys
 input_data = sys.stdin.readline().rstrip()
 print(input_data)
+
+# ✅ 부품 찾기 예제
+n = int(input())
+all_product = list(map(int, input().split()))
+m = int(input())
+ordered_product = list(map(int, input().split()))
+
+all_product.sort() # nlogn의 시간복잡도
+
+# 아래의 이진탐색의 시간복잡도는 m*long
+
+def findNumber(target):
+  start = 0
+  end = n-1
+  
+  while start <= end:
+    # 중간점 인덱스
+    mid = (start + end) // 2
+    if all_product[mid] == target:
+      return "yes"
+    elif all_product[mid] > target:
+      end = mid-1
+    else:
+      start = mid+1
+  return "no"
+
+for target in ordered_product:
+  print(findNumber(target), end=" ")
+# 최종적인 시간복잡도는 O((n+m) * logn)
+
