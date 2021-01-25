@@ -75,6 +75,29 @@ import sys
 input_data = sys.stdin.readline().rstrip()
 print(input_data)
 
+# ✅ bisect 라이브러리
+# : 파이썬에서는 이진 탐색을 쉽게 구현할 수 있도록 bisect 라이브러리를 제공한다.
+# 정렬된 배열에서 특정한 원소를 찾아야할 때 혹은 값이 특정한 범위에 속하는 원소의 개수를 찾고자 할 때 유용
+# 아래 두 함수 모두 시간 복잡도 O(logN)에 동작
+# bisect_left(a, x): 정렬된 순서를 유지하면서 리스트 a에 데이터 x를 삽입할 가장 왼쪽 인덱스를 찾는 메서드
+# bisect_right(a, x): 정렬된 순서를 유지하도록 리스트 a에 데이터 x를 삽일할 가장 오른쪽 인덱스를 찾는 메서드
+from bisect import bisect_left, bisect_right
+
+a = [1, 2, 4, 4, 8]
+x = 4
+print(bisect_left(a, x)) # 2
+print(bisect_right(a,x)) # 4
+
+def count_by_range(a, left_value, right_value):
+  right_index = bisect_right(a, right_value)
+  left_index = bisect_left(a, left_value)
+  return right_index-left_index
+
+a = [1, 2, 3, 3, 3, 4, 4, 8, 9]
+
+print(count_by_range(a, 4, 4)) # 2
+print(count_by_range(a, -1, 3)) # 5 => [-1, 3] 범위에 있는 데이터 개수 출력
+
 # ✅ 부품 찾기 예제
 n = int(input())
 all_product = list(map(int, input().split()))
@@ -176,3 +199,65 @@ while start <= end:
   else:
     result = mid # 최대한 덜 잘랐을 때가 정답이므로, 여기에서 result를 기록
     start = mid + 1
+# cf. parametric search: 원하는 조건을 만족하는 가장 큰 값을 찾는 최적화 문제를, 이진 탐색을 이용하여 결정 문제(예 혹은 아니오로 답하는 문제)로 바꾸어 해결
+
+# ✅ 정렬된 배열에서 특정 수의 개수 구하기
+# ◽ 이진 탐색 직접 구현
+n, x = map(int, input().split())
+elements = list(map(int, input().split()))
+
+def count_by_value(array, x):
+
+  first= findFirst(array, x)
+
+  if first == None:
+    return -1
+  
+  last = findLast(array, x)
+  
+  return last-first+1
+
+def findLast(array, x):
+  start = 0
+  end = n-1
+  answer = None
+  while start <= end:
+    mid = (start+end)//2
+    if array[mid] <= x:
+      if array[mid] == x:
+        answer = mid
+      start = mid + 1
+    else:
+      end = mid-1
+  return answer
+
+
+def findFirst(array, x):
+  start = 0
+  end = n-1
+  answer = None
+  while start <= end:
+    mid = (start+end)//2
+    if array[mid] >= x:
+      if array[mid] == x:
+        answer = mid
+      end = mid-1
+    else:
+      start = mid+1
+  return answer
+
+print(count_by_value(elements, x))
+
+# ◽ bisect 라이브러리 이용
+from bisect import bisect_left, bisect_right
+
+n, x = map(int, input().split())
+elements = list(map(int, input().split()))
+
+left_index = bisect_left(elements, x)
+right_index = bisect_right(elements, x)
+
+answer = right_index-left_index
+result = answer if answer != 0 else -1
+
+print(result)
