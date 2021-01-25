@@ -261,3 +261,25 @@ answer = right_index-left_index
 result = answer if answer != 0 else -1
 
 print(result)
+
+# ✅ 고정점 찾기
+def q28(array, start, end):
+  if start > end:
+    return None
+  mid = (start+end) // 2
+  if array[mid] == mid:
+    return mid
+  elif array[mid] > mid:
+    return q28(array, start, mid-1)
+  else:
+    return q28(array, mid+1, end)
+
+n = int(input())
+points = list(map(int, input().split()))
+
+index = q28(points, 0, n-1)
+
+if index == None:
+  print(-1)
+else: 
+  print(index)
