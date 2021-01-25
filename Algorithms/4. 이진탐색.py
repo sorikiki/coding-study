@@ -83,7 +83,7 @@ ordered_product = list(map(int, input().split()))
 
 all_product.sort() # nlogn의 시간복잡도
 
-# 아래의 이진탐색의 시간복잡도는 m*long
+# 아래의 이진탐색의 시간복잡도는 m*logn
 
 def findNumber(target):
   start = 0
@@ -104,3 +104,30 @@ for target in ordered_product:
   print(findNumber(target), end=" ")
 # 최종적인 시간복잡도는 O((n+m) * logn)
 
+# ◽ 계수 정렬 이용하기
+n = int(input())
+all_product = [0] * 100001
+product = list(map(int, input().split()))
+for i in product:
+  all_product[i] = 1
+m = int(input())
+ordered_product = list(map(int, input().split()))
+
+for target in ordered_product:
+  if all_product[target] == 1:
+    print("yes", end=" ")
+  else:
+    print("no", end=" ") 
+# 시간복잡도는 O(n + 100001)
+
+# ◽ 집합 자료형 이용
+n = int(input())
+all_product = set(map(int, input().split()))
+m = int(input())
+ordered_product = list(map(int, input().split()))
+
+for target in ordered_product:
+  if target in all_product:
+    print("yes", end=" ")
+  else:
+    print("no", end=" ") 
