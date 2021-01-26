@@ -283,3 +283,31 @@ if index == None:
   print(-1)
 else: 
   print(index)
+
+# ✅ 공유기 설치 
+n, c = map(int, input().split())
+house = []
+for _ in range(n):
+  house.append(int(input()))
+house.sort()
+# gap의 범위에 대한 시작점과 끝점
+start = house[1] - house[0] # 1
+end = house[-1] - house[0] # 8
+
+result = 0
+
+while start<=end:
+  mid = (start + end)//2
+  value = house[0]
+  count = 1
+  for i in range(1,n):
+    if house[i] >= value + mid:
+      count += 1
+      value = house[i]
+  if count >= c:
+    start = mid + 1
+    result = mid
+  else:
+    end = mid - 1
+
+print(result)
