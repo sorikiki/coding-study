@@ -319,7 +319,6 @@ print(result)
 # bisect 함수는 정렬된 배열에서만 사용이 가능
 word_data = [[] for _ in range(100001)]
 reversed_word_data = [[] for _ in range(100001)]
-answer = []
 
 def findFirst(backward, target, first, last):
   data = sorted(word_data[len(target)])
@@ -368,6 +367,7 @@ def findLast(backward, target, first, last):
 
 
 def solution(words, queries):
+    answer = []
     for word in words:
       num_word = len(word)
       word_data[num_word].append(word)
@@ -401,3 +401,43 @@ def solution(words, queries):
           answer.append(last-first+1)
 
     return answer
+
+# ✨ bisect 라이브러리를 사용한 문제 해결
+# ⭐ Remind: 
+# bisect_left(a, x): 정렬된 순서를 유지하면서 리스트 a에 데이터 x를 삽입할 가장 왼쪽 인덱스를 찾는 메서드
+# bisect_right(a, x): 정렬된 순서를 유지하도록 리스트 a에 데이터 x를 삽일할 가장 오른쪽 인덱스를 찾는 메서드
+# ⭐ 'fro??' -> 'froaa'를 left_value, 'frozz'를 right_value로 바꾸는 idea ! 
+from bisect import bisect_left, bisect_right
+
+# 가사 단어의 길이는 1이상 10000 이하
+word_data = [[] for _ in range(10001)]
+reversed_word_data = [[] for _ in range(10001)]
+
+def count_by_range(a, left_value, right_value):
+  left_index = bisect_left(a, left_value)
+  right_index = bisect_right(a, right_value)
+  return right_index - left_index
+
+
+def solution(words, queries):
+  answer = []
+  # 시간복잡도 O(N)
+  for word in words:
+    num_word = len(word)
+    word_data[num_word].append(word)
+    reversed_word_data[num_word].append(word[::-1])
+    # 시간복잡도 O(NlogN)
+  for i in range(10001):
+    word_data[i].sort()
+    reversed_word_data[i].sort()
+
+    # 시간 복잡도 O(N)
+  for query in queries:
+      # 접미사에 mark 가 있는 경우
+    if query[0] != '?':
+      res = count_by_range(word_data[len(query)], query.replace('?','a'), query.replace('?','z'))
+      # 접두사에 mark 가 있는 경우
+    else:
+      res = count_by_range(reversed_word_data[len(query)], query[::-1].replace('?','a'), query[::-1].replace('?','z'))
+    answer.append(res)
+  return answer
