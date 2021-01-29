@@ -83,3 +83,13 @@ for i in range(2, x+1):
     d[i] = min(d[i], d[i//5]+1)
 print(d[x])
 # 숫자 1은 조건하에서 뺄 수도 나눌 수도 없으므로, 범위 안에 포함되지 않았다. 따라서 숫자 1에 대해선 어떠한 연산도 수행하지 않으므로 d[1] = 0 이다.
+
+# ✅ 개미 전사
+n = int(input())
+array = list(map(int, input().split()))
+d = [0] * 100
+d[0] = array[0]
+d[1] = max(array[0], array[1])
+for i in range(2, n):
+  d[i] = max(d[i-1], d[i-2] + array[i])
+print(d[n-1])
