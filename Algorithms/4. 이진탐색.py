@@ -77,7 +77,7 @@ print(input_data)
 
 # ✅ bisect 라이브러리
 # : 파이썬에서는 이진 탐색을 쉽게 구현할 수 있도록 bisect 라이브러리를 제공한다.
-# 정렬된 배열에서 특정한 원소를 찾아야할 때 혹은 값이 특정한 범위에 속하는 원소의 개수를 찾고자 할 때 유용
+# ⭐'정렬된 배열'⭐에서 특정한 원소를 찾아야할 때 혹은 값이 특정한 범위에 속하는 원소의 개수를 찾고자 할 때 유용
 # 아래 두 함수 모두 시간 복잡도 O(logN)에 동작
 # bisect_left(a, x): 정렬된 순서를 유지하면서 리스트 a에 데이터 x를 삽입할 가장 왼쪽 인덱스를 찾는 메서드
 # bisect_right(a, x): 정렬된 순서를 유지하도록 리스트 a에 데이터 x를 삽일할 가장 오른쪽 인덱스를 찾는 메서드
@@ -311,3 +311,93 @@ while start<=end:
     end = mid - 1
 
 print(result)
+
+# ✅ 가사 검색 (효율성 테스트 1, 2번 틀림)
+# 시간초과를 어떻게 해결하면 좋을 까.
+# bisect 함수는 정렬된 배열에서만 사용이 가능
+# 시간초과를 어떻게 해결하면 좋을 까.
+# bisect 함수는 정렬된 배열에서만 사용이 가능
+word_data = [[] for _ in range(100001)]
+reversed_word_data = [[] for _ in range(100001)]
+answer = []
+
+def findFirst(backward, target, first, last):
+  data = sorted(word_data[len(target)])
+  # ["frame","frodo","front","frost", "kakao"]
+  if backward:
+    data = sorted(reversed_word_data[len(target)])
+  answer = None
+  start = 0
+  end = len(data)-1
+  
+  while start <= end:
+    mid = (start+end) // 2
+    value = data[mid][first:last]
+    target = target[first:last]
+    temp = sorted([value, target])
+    if temp[0] == target:
+      if value == target:
+        answer = mid
+      end = mid-1
+    else:
+      start = mid+1
+  print(answer)
+  return answer
+
+def findLast(backward, target, first, last):
+  data = sorted(word_data[len(target)])
+  if backward:
+    data = sorted(reversed_word_data[len(target)])
+  answer = None
+  start = 0
+  end = len(data)-1
+
+  while start <= end:
+    mid = (start+end) // 2
+    value = data[mid][first:last]
+    target = target[first:last]
+    temp = sorted([value, target])
+    if temp[0] == value:
+      if value == target:
+        answer = mid
+      start = mid + 1
+    else:
+      end = mid - 1
+  print(answer)
+  return answer
+
+
+def solution(words, queries):
+    for word in words:
+      num_word = len(word)
+      word_data[num_word].append(word)
+      reversed_word_data[num_word].append(word[::-1])
+
+    for query in queries:
+      first_mark = query[0]
+      backward = False
+      # 접두사에 마크가 있는 경우 
+      if first_mark == '?':
+        backward = True
+        query = query[::-1]
+      last_index = 0
+      first_index = 0
+      for i in range(0, len(query)):
+        if query[i] == '?':
+          if i == 0:
+            answer.append(len(word_data[len(query)]))
+            break
+          last_index = i
+          break
+        
+      if last_index:
+        first = findFirst(backward, query, first_index, last_index)
+        last = findLast(backward, query, first_index, last_index)
+
+        if first == None:
+          answer.append(0)
+        
+        else:
+          answer.append(last-first+1)
+
+    return answer
