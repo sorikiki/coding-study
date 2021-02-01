@@ -103,3 +103,23 @@ for i in range(3, n+1):
   d[i] = (d[i-1] + 2 * d[i-2]) % 796796
 
 print(d[n])
+
+# ✅ 효율적인 화폐 구성
+n, m = map(int, input().split())
+coin = []
+d = [10001] * (m+1)
+d[0] = 0
+for _ in range(n):
+  coin.append(int(input()))
+
+for i in coin:
+  k = i # k = 2
+  while k <= m:
+    if k == i:
+      d[k] = 1
+    else:
+      d[k] = min(d[k], d[k-i] + 1)
+    k += i
+
+d[m] = -1 if d[m] == 10001 else d[m]
+print(d[m])
