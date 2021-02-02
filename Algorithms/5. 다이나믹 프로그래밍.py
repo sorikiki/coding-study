@@ -123,3 +123,23 @@ for i in coin:
 
 d[m] = -1 if d[m] == 10001 else d[m]
 print(d[m])
+
+# ✅ 정수 삼각형
+n = int(input())
+data = [[0] * i for i in range(1,n+1)]
+result = [[0] * i for i in range(1, n+1)]
+for i in range(n):
+  data[i] = list(map(int, input().split()))
+
+result[0][0] = data[0][0]
+
+# 행
+for i in range(1,n):
+# 열
+  for j in range(0, i+1):
+    if 0<=j<i:
+      result[i][j] = max(result[i][j], result[i-1][j] + data[i][j])
+    if 1<=j<(i+1):
+      result[i][j] = max(result[i][j], result[i-1][j-1] + data[i][j])
+
+print(max(result[n-1]))
