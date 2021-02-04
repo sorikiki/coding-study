@@ -166,3 +166,22 @@ for i in range(1,n):
     next5 = ugly[i5] * 5
 
 print(ugly[n-1])
+
+
+# ✅ 퇴사
+# ✔ 인덱스 활용 주의 ⭐⭐
+# : -가 붙은 인덱스가 반복문 과정에서 부호가 바뀔 수 있음을 주의
+# ✔ 경계점 주의: i + data[i][0] == n 일때가 경계임.
+n = int(input())
+data = []
+result = [0] * n
+for _ in range(n):
+  t, p = map(int, input().split())
+  data.append((t, p))
+# n-1부터 0번째 인덱스까지 거꾸로 확인
+for i in range(n-1, -1, -1):
+  if i + data[i][0] == n:
+    result[i] = data[i][1]
+  elif i + data[i][0] < n:
+    result[i] = data[i][1] + max(result[i+data[i][0]:])
+print(max(result))
