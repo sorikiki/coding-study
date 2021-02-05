@@ -185,3 +185,15 @@ for i in range(n-1, -1, -1):
   elif i + data[i][0] < n:
     result[i] = data[i][1] + max(result[i+data[i][0]:])
 print(max(result))
+
+# ✅ 병사 배치하기
+# => 전형적인 '가장 긴 증가하는 부분 수열 찾기' 문제
+n = int(input())
+data = list(map(int, input().split()))
+data.reverse()
+result = [1] * n
+for i in range(1, n):
+  for j in range(0, i):
+    if data[i] > data[j]:
+      result[i] = max(result[i], result[j]+1)
+print(n-max(result))
