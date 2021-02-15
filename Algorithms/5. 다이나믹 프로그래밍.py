@@ -197,3 +197,22 @@ for i in range(1, n):
     if data[i] > data[j]:
       result[i] = max(result[i], result[j]+1)
 print(n-max(result))
+
+# ✅ 편집 거리 
+a = input()
+b = input()
+row = len(a)+1 # 7
+col = len(b)+1
+data=[[0] * col for _ in range(row)]
+for i in range(row): # 0 1 2 3 4 5 6
+  for j in range(col):
+    if i == 0:
+      data[i][j] = j
+    elif j == 0:
+      data[i][j] = i
+    elif a[i-1] == b[j-1]:
+      data[i][j] = data[i-1][j-1]
+    else:
+      data[i][j] = min(data[i-1][j], data[i-1][j-1], data[i][j-1])+1
+
+print(data[row-1][col-1])
